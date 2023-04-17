@@ -28,10 +28,6 @@
       <div class="row">
         <div class="col-12">
           <div class="card">
-            {{-- <div class="card-header">
-              <h3 class="card-title">DataTable with minimal features & hover style</h3>
-            </div> --}}
-            <!-- /.card-header -->
             <div class="card-body">
               @if(Session::has('thongbao'))
                 <div class="alert alert-success">{{ Session::get('thongbao') }}</div>
@@ -53,6 +49,8 @@
                     <td>{{ $product->Title }}</td>
                     <td>{{ $product->category->CateName ?? '' }}</td>
                     <td>
+                      {{-- <a href="{{ route('editsp',$product->id) }}"><i class="text-warning fa-solid fa-edit"></i></a>
+                      <a href="#" onclick="removeProduct($product->id, '/admin/product/destroy')"><i class="text-danger fa-solid fa-trash"></i></a> --}}
                       <form action="{{ route('deletesp', $product->id) }}" method="post">
                         <a href="{{ route('editsp',$product->id) }}"><i class="text-warning fa-solid fa-edit"></i></a>
                         @csrf
@@ -78,8 +76,14 @@
 
 @endsection
 
-<!-- DataTables -->
-<script src="/Admin/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="/Admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="/Admin/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-<script src="/Admin/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+@section('js')
+  <!-- DataTables -->
+  <script src="/Admin/plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="/Admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="/Admin/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+  <script src="/Admin/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+
+  {{-- <script src="/Admin/js/main.js"></script> --}}
+@endsection
+
+

@@ -29,32 +29,21 @@ class HomeController extends Controller
         return view('DanhMucSanPham', ['products' => $productsbytype]);
     }
     public function ChiTietSanPham(Request $request){
-        // $product = DB::table('product')
-        // ->join('imageproduct', 'Product.id', '=', 'imageproduct.ProID')
-        // ->select('product.*', 'imageproduct.ImagePath')
-        // ->where('imageproduct.ProID', $request->id)
-        // ->get();
-        $product = productsModel::where('id', $request->id)->first();
+        $product = DB::table('product')
+        ->join('imageproduct', 'Product.id', '=', 'imageproduct.ProID')
+        ->select('product.*', 'imageproduct.*')
+        ->where('imageproduct.ProID', $request->id)
+        ->get();
+        dd($product);
+        // $product = productsModel::where('id', $request->id)->first();
         // $product = productsModel::with('image')->get();
         // echo($product);
-        $sp_tuongtu = productsModel::where('CateID', $product->CateID)->paginate(8);
+        // $sp_tuongtu = productsModel::where('CateID', $product->CateID)->paginate(8);
         // $sp_tuongtu = null;
-        return view('ChiTietSanPham', compact('product', 'sp_tuongtu'));
+        // return view('ChiTietSanPham', compact('product', 'sp_tuongtu'));
     }
     public function GioHang(){
         return view('GioHang');
-    }
-    // Thêm sản phẩm vào giỏ hàng
-    public function addCart(){
-
-    }
-    // Xoá 1 sản phẩm
-    public function reduceByOne($id){
-
-    }
-    // Xoá nhiều sản phẩm
-    public function removeItem($id){
-
     }
     public function TinTuc(){
         return view('TinTuc');

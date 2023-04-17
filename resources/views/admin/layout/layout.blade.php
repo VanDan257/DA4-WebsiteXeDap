@@ -7,6 +7,8 @@
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
   <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css">
 
     <link href="/Admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -50,7 +52,7 @@
 
 
         <!-- Begin Page Content -->
-        <div class="container-fluid">
+        <div class="container-fluid"  style="padding-left: 0;">
             <!-- Page Heading -->
             @yield('content')
 

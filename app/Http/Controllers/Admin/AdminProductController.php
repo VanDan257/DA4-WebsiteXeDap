@@ -55,15 +55,16 @@ class AdminProductController extends Controller
         $sp->PromotionPrice = $request->input('PromotionPrice');
         $sp->save();
 
+        $newestProduct = productsModel::latest()->first();
         $price = new priceproductModel();
-        $price->ProID = $sp->ProID;
+        $price->ProID = $newestProduct->id;
         $price->Price = $request->input('Price');
         $price->StartDate = Carbon::today();
         $price->EndDate = '2023-06-06 00:00:00';
         $price->save();
 
         $image = new imageproductModel();
-        $image->ProID = $sp->ProID;
+        $image->ProID = $newestProduct->id;
         $image->ImagePath = $request->input('Image');
         $image->Caption = 'Ảnh chính';
         $image->IsDefault = true;
@@ -87,9 +88,7 @@ class AdminProductController extends Controller
      */
     public function edit(string $id)
     {
-        // dd($product);
         $product = productsModel::where('id', $id)->first();
-        echo($product);
         return view('admin.product.update', compact('product'));
     }
 
@@ -100,26 +99,28 @@ class AdminProductController extends Controller
     {
         //
         productsModel::find($id)->update([
-            'Active' => $request->Active,
-            'BestSeller' => $request->BestSeller,
-            'CatID' => $request->CatID,
-            'DateCreated' => $request->DateCreated,
-            'DateModified' => $request->DateModified,
-            'Discount' => $request->Discount,
-            'HomeFlag' => $request->HomeFlag,
-            'Id' => $request->Id,
-            'SeoAlias' => $request->SeoAlias,
-            'Title' => $request->Title,
-            'UnitsInStock'=> $request->UnitsInStock]);
+            'Title' => $request->input('Title'),
+            'CateID' => $request->input('CateID'),
+            'Description' => $request->input('Description'),
+            'Price' => $request->input('Price'),
+            'PromotionPrice' => $request->input('PromotionPrice')]);
         return redirect()->route('indexsp')->with('thongbao', 'Cập nhật sản phẩm thành công');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(productsModel $product)
+    public function destroy(string $id)
     {
         //
+
+        $image = imageproductModel::where('ProID', $id)->first();
+        $image->delete();
+
+        $price = priceproductModel::where('ProID', $id)->first();
+        $price->delete();
+
+        $product = productsModel::find($id);
         $product->delete();
         return redirect()->route('indexsp')->with('thongbao', 'Xoá sản phẩm thành công');
     }
