@@ -55,6 +55,12 @@ class AdminProductController extends Controller
         $sp->PromotionPrice = $request->input('PromotionPrice');
         $sp->save();
 
+        // UpLoadFile
+        $file = $request->file('ImagePath');
+
+        // Lưu file vào đường dẫn mong muốn
+        $file->move('FileUpLoad/images', $file->getClientOriginalName());
+
         $newestProduct = productsModel::latest()->first();
         $price = new priceproductModel();
         $price->ProID = $newestProduct->id;
@@ -104,6 +110,7 @@ class AdminProductController extends Controller
             'Description' => $request->input('Description'),
             'Price' => $request->input('Price'),
             'PromotionPrice' => $request->input('PromotionPrice')]);
+
         return redirect()->route('indexsp')->with('thongbao', 'Cập nhật sản phẩm thành công');
     }
 

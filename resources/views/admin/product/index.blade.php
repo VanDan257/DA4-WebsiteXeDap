@@ -4,7 +4,7 @@
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
-  <div style="margin-top: 24px">
+  <div style="margin-top: 24px; margin-left: 24px">
     <a href="{{ route('createsp') }}" class="btn btn-success">Thêm mới sản phẩm</a>
   </div>
     <div class="container-fluid">
@@ -45,7 +45,7 @@
                 @foreach ($products as $product)
                   
                   <tr>
-                    <td><img style="width:150px" src="/FileUpLoad/images/{{ $product->Image }}" alt=""></td>
+                    <td><a href="{{ route('indeximg', $product->id) }}"><img style="width:150px" src="/FileUpLoad/images/{{ $product->Image }}" alt=""></a></td>
                     <td>{{ $product->Title }}</td>
                     <td>{{ $product->category->CateName ?? '' }}</td>
                     <td>

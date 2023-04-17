@@ -3,7 +3,7 @@
 @section('content')
 <section class="content-header">
     <div style="margin-top: 24px">
-      <a href="{{ route('createsp') }}" class="btn btn-success">Thêm mới ảnh sản phẩm</a>
+      <a href="{{ route('createimg', $imageproducts[0]->ProID) }}" class="btn btn-success">Thêm mới ảnh sản phẩm</a>
     </div>
     <div class="container-fluid">
         <div class="row mb-2">
@@ -54,21 +54,25 @@
                             <tr>
                                 {{-- <td>{{$index+1}}</td> --}}
                                 <td>
-                                        <img src="{{$imageproduct->attributes->imagePath}}" style="width: 150px;" />
+                                        <img src="/FileUpLoad/images/{{$imageproduct->ImagePath}}" style="width: 150px;" />
                                     </a>
                                 </td>
                                 <td>
-                                    {{$imageproduct->attributes->caption}}
+                                    {{$imageproduct->Caption}}
                                 </td>
                                 <td>
-                                    {{$imageproduct->attributes->isDefault}}
+                                    {{$imageproduct->CsDefault}}
                                 </td>
                                 <td>
-                                    {{$imageproduct->attributes->sortOrder}}
+                                    {{$imageproduct->SortOrder}}
                                 </td>
                                 <td>
-                                    <a href="/admin/product/editimage.html?ImgID={{ $imageproduct->attributes->imgID }}"><i class="text-warning fa-solid fa-pen-to-square"></i></a>
-                                    <a href="#" ng-click="deleteImage(image.imgID)"><i class="text-danger fa-solid fa-trash"></i></a>
+                                  <form action="{{ route('deleteimg', $imageproduct->id) }}" method="post">
+                                    <a href="{{ route('editimg',$imageproduct->id) }}"><i class="text-warning fa-solid fa-edit"></i></a>
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" style="border: none; outline: none"><i class="text-danger fa-solid fa-trash"></i></button>
+                                  </form>                          
                                 </td>
                             </tr>
                         @endforeach

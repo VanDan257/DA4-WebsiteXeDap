@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\imageproductModel;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 
 class AdminImageProduct extends Controller
 {
@@ -13,12 +14,12 @@ class AdminImageProduct extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index(string $id)
     {
         //
         $imageproducts = imageproductModel::where('ProID', $id)->get();
-        dd($imageproducts);
-        // return view('admin.ImageProduct.index', compact('imageproducts'));
+        // dd($imageproducts);
+        return view('admin.ImageProduct.index', compact('imageproducts'));
     }
 
     /**
@@ -26,9 +27,13 @@ class AdminImageProduct extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(string $id)
     {
-        //
+
+        $imageproducts = imageproductModel::where('ProID', $id)->get();
+        // dd($imageproducts);
+        return view('admin.ImageProduct.create', compact('imageproducts'));
+
     }
 
     /**
@@ -40,6 +45,24 @@ class AdminImageProduct extends Controller
     public function store(Request $request)
     {
         //
+        $file = $request->input('Image');
+        dd($file);
+        dd($request);
+        // $img = new imageproductModel();
+        // $img->ProID = $request->input('ProID');
+        // $img->Caption = $request->input('Caption');
+        // $img->ImagePath = $request->file('ImagePath');
+        // $img->IsDefault = 0;
+        // $img->SortOrder = $request->input('SortOrder');
+        // $img->save();
+
+        // // Lưu file vào đường dẫn mong muốn
+        // $file->move('FileUpLoad/images', $file->getClientOriginalName());
+
+        // $imageproducts = imageproductModel::where('ProID', $request->ProID)->get();
+        // dd($imageproducts);
+        // return view('admin.ImageProduct.index', compact('imageproducts'));
+
     }
 
     /**
