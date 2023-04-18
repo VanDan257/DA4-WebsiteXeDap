@@ -73,6 +73,7 @@
   
                   <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Cập nhật</button>
+                    <a href="{{ route('indexsp') }}" class="btn btn-primary">Quay lại</a>
                   </div>
                 </form>
               </div>

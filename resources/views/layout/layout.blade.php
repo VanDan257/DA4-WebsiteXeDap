@@ -51,7 +51,7 @@
     <script src="/Assets/lib/owlcarousel/owl.carousel.min.js"></script>
     <script type="text/javascript" src="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.js"></script>
     <script src="http://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
-
+    <script src="/Assets/js/mixitup.min.js"></script>
 
 
     <!-- Contact Javascript File -->

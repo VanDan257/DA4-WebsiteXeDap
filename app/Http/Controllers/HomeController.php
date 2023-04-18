@@ -14,8 +14,9 @@ class HomeController extends Controller
     //
     public function TrangChu(){
         // $categories = categoryModel::all();
-        $products = productsModel::limit(8)->get();
+        $products = productsModel::all();
         $productsale = DB::table('product')->where('PromotionPrice', '<>', 0)->limit(8)->get();
+        // dd($products);
         return view('TrangChu', compact('products', 'productsale'));
     }
     public function DanhMucSanPham(){
@@ -29,18 +30,20 @@ class HomeController extends Controller
         return view('DanhMucSanPham', ['products' => $productsbytype]);
     }
     public function ChiTietSanPham(Request $request){
-        $product = DB::table('product')
+        $images = DB::table('product')
         ->join('imageproduct', 'Product.id', '=', 'imageproduct.ProID')
-        ->select('product.*', 'imageproduct.*')
+        ->select('imageproduct.*')
         ->where('imageproduct.ProID', $request->id)
         ->get();
-        dd($product);
-        // $product = productsModel::where('id', $request->id)->first();
-        // $product = productsModel::with('image')->get();
-        // echo($product);
-        // $sp_tuongtu = productsModel::where('CateID', $product->CateID)->paginate(8);
-        // $sp_tuongtu = null;
-        // return view('ChiTietSanPham', compact('product', 'sp_tuongtu'));
+        $specifications = DB::table('product')
+        ->join('specifications', 'Product.id', '=', 'specifications.ProID')
+        ->select('specifications.*')
+        ->where('specifications.ProID', $request->id)
+        ->get();
+        // dd($specifications);
+        $product = productsModel::where('id', $request->id)->first();
+        $sp_tuongtu = productsModel::where('CateID', $product->CateID)->limit(8)->get();
+        return view('ChiTietSanPham', compact('product', 'sp_tuongtu', 'images', 'specifications'));
     }
     public function GioHang(){
         return view('GioHang');

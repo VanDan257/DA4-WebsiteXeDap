@@ -24,45 +24,26 @@
             <div class="col-lg-5 pb-5">
                 <div id="product-slick-slide" class="slick slide">
                     <div class="product-slick-inner border position-relative">
-                        <div class="product-slick-item">
+                        {{-- <div class="product-slick-item">
                             <img class="product-thumbnail w-100 h-100" src="/FileUpLoad/images/{{ $product->Image }}" alt="Image">
-                        </div>
-                        <div class="product-slick-item">
-                            <img class="w-100 h-100" src="img/titoni-83919-s-612-nam-1-600x600-removebg-preview.png" alt="Image">
-                        </div>
-                        <div class="product-slick-item">
-                            <img class="w-100 h-100" src="img/titoni-818-s-656-nu-1-600x600.jpg" alt="Image">
-                        </div>
-                        <div class="product-slick-item">
-                            <img class="w-100 h-100" src="img/frederique-constant-fc-318mpwn3b4-nu-300x300.jpg" alt="Image">
-                        </div>
+                        </div> --}}
+                        @foreach ($images as $img)    
+                            <div class="product-slick-item">
+                                <img class="w-100 h-100" src="/FileUpLoad/images/{{ $img->ImagePath }}" alt="Image">
+                            </div>
+                        @endforeach
                     </div>
 
                     <div class="product-navfor-slick-inner border">
                         <div class="row w-100" id="slick-slide-navfor">
-                            <div class="col-lg-3 mw-100">
-                                <div class="product-slick-item">
-                                    <img class="w-100 h-100" src="img/titoni-878-srg-657-nam-1-600x600.jpg" alt="Image">
+                            {{-- @foreach ($images as $img)     --}}
+                                <div class="col-lg-3 mw-100">
+                                    <div class="product-slick-item">
+                                        {{-- <img class="w-100 h-100" src="/FileUpLoad/images/{{ $product->ImagePath }}" alt="Image"> --}}
+                                        <img class="w-100 h-100" src="/FileUpLoad/images/img4.png" alt="Image">
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="col-lg-3 mw-100">
-                                <div class="product-slick-item">
-                                    <img class="w-100 h-100" src="img/titoni-83919-s-612-nam-1-600x600-removebg-preview.png" alt="Image">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3 mw-100">
-                                <div class="product-slick-item">
-                                    <img class="w-100 h-100" src="img/titoni-818-s-656-nu-1-600x600.jpg" alt="Image">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3 mw-100">
-                                <div class="product-slick-item">
-                                    <img class="w-100 h-100" src="img/frederique-constant-fc-318mpwn3b4-nu-300x300.jpg" alt="Image">
-                                </div>
-                            </div>
+                            {{-- @endforeach --}}
                         </div>
                     </div>
                     
@@ -162,77 +143,19 @@
                         <p>{!! $product->Description !!}</p>
                     </div>
                     <div class="tab-pane fade" id="tab-pane-2">
-                        <h4 class="mb-3">Additional Information</h4>
-                        <p>Eos no lorem eirmod diam diam, eos elitr et gubergren diam sea. Consetetur vero aliquyam invidunt duo dolores et duo sit. Vero diam ea vero et dolore rebum, dolor rebum eirmod consetetur invidunt sed sed et, lorem duo et eos elitr, sadipscing kasd ipsum rebum diam. Dolore diam stet rebum sed tempor kasd eirmod. Takimata kasd ipsum accusam sadipscing, eos dolores sit no ut diam consetetur duo justo est, sit sanctus diam tempor aliquyam eirmod nonumy rebum dolor accusam, ipsum kasd eos consetetur at sit rebum, diam kasd invidunt tempor lorem, ipsum lorem elitr sanctus eirmod takimata dolor ea invidunt.</p>
+                        {{-- <h4 class="mb-3">Additional Information</h4> --}}
                         <div class="row">
-                            <div class="col-md-6">
-                                <table class="table">
-                                    <tbody>
-                                      <tr>
-                                        <td class="font-weight-bold">Giới tính:</td>
-                                        <td>Nữ</td>
-                                      </tr>
-                                      <tr>
-                                        <td class="font-weight-bold">Đường kính mặt:</td>
-                                        <td>
-                                            36 mm</td>
-                                      </tr>
-                                      <tr>
-                                        <td class="font-weight-bold">Dây đeo:</td>
-                                        <td>
-                                            Da cá sấu</td>
-                                      </tr>
-                                      <tr>
-                                        <td class="font-weight-bold">Độ rộng dây:</td>
-                                        <td>18 mm</td>
-                                      </tr>
-                                      <tr>
-                                        <td class="font-weight-bold">Khung viền:</td>
-                                        <td>
-                                            Thép không gỉ 316L mạ PVD</td>
-                                      </tr>
-                                      <tr>
-                                        <td class="font-weight-bold">Độ dày mặt:</td>
-                                        <td>
-                                            10.6 mm</td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                            </div>
-                            <div class="col-md-6">
-                                <table class="table">
-                                    <tbody>
-                                      <tr>
-                                        <td class="font-weight-bold">Giới tính:</td>
-                                        <td>Nữ</td>
-                                      </tr>
-                                      <tr>
-                                        <td class="font-weight-bold">Đường kính mặt:</td>
-                                        <td>
-                                            36 mm</td>
-                                      </tr>
-                                      <tr>
-                                        <td class="font-weight-bold">Dây đeo:</td>
-                                        <td>
-                                            Da cá sấu</td>
-                                      </tr>
-                                      <tr>
-                                        <td class="font-weight-bold">Độ rộng dây:</td>
-                                        <td>18 mm</td>
-                                      </tr>
-                                      <tr>
-                                        <td class="font-weight-bold">Khung viền:</td>
-                                        <td>
-                                            Thép không gỉ 316L mạ PVD</td>
-                                      </tr>
-                                      <tr>
-                                        <td class="font-weight-bold">Độ dày mặt:</td>
-                                        <td>
-                                            10.6 mm</td>
-                                      </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                            <table class="table">
+                                <tbody>
+                                    @foreach ($specifications as $spe)
+                                        <tr>
+                                            <td></td>
+                                            <td class="font-weight-bold">{{ $spe->SpeName }}:</td>
+                                            <td>{{ $spe->Description }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="tab-pane-3">

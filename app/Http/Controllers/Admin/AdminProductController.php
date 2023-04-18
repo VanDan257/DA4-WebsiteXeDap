@@ -7,6 +7,7 @@ use App\Models\categoryModel;
 use App\Models\imageproductModel;
 use App\Models\priceproductModel;
 use App\Models\productsModel;
+use App\Models\specificationproductModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
@@ -44,38 +45,58 @@ class AdminProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
         // $sp = $request->all();
-        $sp = new productsModel();
-        $sp->Title = $request->input('Title');
-        $sp->CateID = $request->input('CateID');
-        $sp->Description = $request->input('Description');
-        $sp->Image = $request->input('Image');
-        $sp->Price = $request->input('Price');
-        $sp->PromotionPrice = $request->input('PromotionPrice');
-        $sp->save();
+        // $sp = new productsModel();
+        // $sp->Title = $request->input('Title');
+        // $sp->CateID = $request->input('CateID');
+        // $sp->Description = $request->input('Description');
+        // $sp->Image = $request->input('Image');
+        // $sp->Price = $request->input('Price');
+        // $sp->PromotionPrice = $request->input('PromotionPrice');
+        // $sp->save();
 
         // UpLoadFile
-        $file = $request->file('ImagePath');
+        // $file = $request->file('ImagePath');
 
         // Lưu file vào đường dẫn mong muốn
-        $file->move('FileUpLoad/images', $file->getClientOriginalName());
-
+        // $file->move('FileUpLoad/images', $file->getClientOriginalName());
+        
+        // Lấy ra sản phẩm mới nhất
         $newestProduct = productsModel::latest()->first();
-        $price = new priceproductModel();
-        $price->ProID = $newestProduct->id;
-        $price->Price = $request->input('Price');
-        $price->StartDate = Carbon::today();
-        $price->EndDate = '2023-06-06 00:00:00';
-        $price->save();
+        
+        // Thêm giá sản phẩm vào bảng giá
+        // $price = new priceproductModel();
+        // $price->ProID = $newestProduct->id;
+        // $price->Price = $request->input('Price');
+        // $price->StartDate = Carbon::today();
+        // $price->EndDate = '2023-06-06 00:00:00';
+        // $price->save();
 
-        $image = new imageproductModel();
-        $image->ProID = $newestProduct->id;
-        $image->ImagePath = $request->input('Image');
-        $image->Caption = 'Ảnh chính';
-        $image->IsDefault = true;
-        $image->SortOrder = 1;
-        $image->save();
+        // Thêm ảnh sản phẩm vào bảng ảnh
+        // $image = new imageproductModel();
+        // $image->ProID = $newestProduct->id;
+        // $image->ImagePath = $request->input('Image');
+        // $image->Caption = 'Ảnh chính';
+        // $image->IsDefault = true;
+        // $image->SortOrder = 1;
+        // $image->save();
+
+        // Thêm danh sách thuộc tính sản phẩm
+        // $ThongSo[] = new specificationproductModel();
+        // for($i=0; $i<count($request->SpeName); $i++){
+        //     $ThongSo[$i]->SpeName = $request->SpeName[$i];
+        //     $ThongSo[$i]->Description = $request->Description[$i];
+        // }
+
+        // Lặp qua các phần tử trong mảng dữ liệu
+        for($i=0; $i<count($request->input('SpeName')); $i++){
+            $specification = new specificationproductModel();
+            $specification->ProID = $newestProduct->id;
+            $specification->SpeName = $request->input('SpeName');
+            $specification->Description = $request->input('Description');
+            $specification->save();
+        }
+
         
         return redirect()->route('indexsp')->with('thongbao', 'Thêm sản phẩm thành công!');
 

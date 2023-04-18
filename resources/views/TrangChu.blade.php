@@ -39,9 +39,8 @@
             <h2 class="section-title px-5"><span class="px-2">FLASH SALE</span></h2>
         </div>
         <div class="row pb-3">
-            @foreach ($productsale as $sp)
-                
-                <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="owl-carousel related-carousel">
+                @foreach ($productsale as $sp)
                     <div class="card product-item border-0 mb-4" data-index="1">
                         <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
                             <img class="product-thumbnail img-fluid w-100" src="/FileUpLoad/images/{{ $sp->Image }}" alt="">
@@ -66,8 +65,8 @@
                             </form>
                         </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
         </div>
     </div>
     <!-- Products End -->
@@ -98,35 +97,206 @@
 
     <!-- Products Start -->
     <div class="container pt-5">
-        <div class="text-center mb-4">
-            <h2 class="section-title px-5"><span class="px-2">Featured products</span></h2>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="text-center mb-4">
+                    <h2 class="section-title px-5"><span class="px-2">Featured Product</span></h2>
+                </div>
+                <div class="featured__controls">
+                    <ul>
+                        <li class="active" data-filter="*">All</li>
+                        <li data-filter="."></li>
+                        <li data-filter=".xedaproad">XE ĐẠP ĐUA (ROAD)</li>
+                        <li data-filter=".xedapmtb">XE ĐẠP LEO NÚI(MTB)</li>
+                        <li data-filter=".xedaptouring">XE ĐẠP ĐƯỜNG DÀI(TOURING)</li>
+                        <li data-filter=".xedapcity">XE ĐẠP THÀNH PHỐ (CITY)</li>
+                        <li data-filter=".xedaptreem">XE ĐẠP TRẺ EM</li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="row  pb-3">
+        <div class="row featured__filter pb-3">
             @foreach ($products as $sp)
-                <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                    <div class="card product-item border-0 mb-4" data-index="9">
-                        <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                            <img class="product-thumbnail img-fluid w-100" src="/FileUpLoad/images/{{ $sp->Image }}" alt="">
-                        </div>
-                        <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                            <h6 class="product-name text-truncate mb-3">{{ $sp->Title }} </h6>
-                            <div class="d-flex justify-content-center">
-                                @if ($sp->PromotionPrice != 0)
-                                    <h6>{{ number_format($sp->Price, 0, ',', '.') ?? 'Liên hệ'  }}VNĐ</h6>
-                                    <h6 class="text-muted ml-2"><del>{{ number_format($sp->PromotionPrice, 0, ',', '.') ?? 0  }}VNĐ</del></h6>
-                                
-                                @else
-                                    <h6>{{ number_format($sp->Price, 0, ',', '.') ?? 'Liên hệ'  }}VNĐ</h6>
+                @if($sp->CateID == 1)
+                    <div class="col-lg-3 col-md-6 col-sm-12 pb-1 mix xedaproad">
+                        <div class="featured__item">
+                            <div class="card product-item border-0 mb-4">
+                                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                    <img class="product-thumbnail img-fluid w-100" src="/FileUpLoad/images/{{ $sp->Image }}" alt="">
+                                </div>
+                                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                    <h6 class="product-name text-truncate mb-3">{{ $sp->Title }} </h6>
+                                    <div class="d-flex justify-content-center">
+                                        @if ($sp->PromotionPrice != 0)
+                                            <h6>{{ number_format($sp->Price, 0, ',', '.') ?? 'Liên hệ'  }}VNĐ</h6>
+                                            <h6 class="text-muted ml-2"><del>{{ number_format($sp->PromotionPrice, 0, ',', '.') ?? 0  }}VNĐ</del></h6>
                                         
-                                @endif
+                                        @else
+                                            <h6>{{ number_format($sp->Price, 0, ',', '.') ?? 'Liên hệ'  }}VNĐ</h6>
+                                                
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="card-footer d-flex justify-content-between bg-light border">
+                                    <a href="{{ route('chitietsanpham', $sp->id) }}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
+                                    <form action="{{ route('cart.store') }}" method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        <input type="hidden" value="{{ $sp->id }}" name="id">
+                                        <input type="hidden" value="{{ $sp->Title }}" name="name">
+                                        <input type="hidden" value="{{ $sp->Image }}" name="image">
+                                        <input type="hidden" value="{{ $sp->Price }}" name="price">
+                                        <input type="hidden" value="1" name="quantity">
+                                        <button class="btn btn-sm btn-add-cart text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add to cart</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                        <div class="card-footer d-flex justify-content-between bg-light border">
-                            <a href="{{ route('chitietsanpham', $sp->id) }}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                            <a type="button" class="btn btn-sm btn-add-cart text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add to cart</a>
+                    </div>
+                @endif
+                 @if($sp->CateID == 2)
+                    <div class="col-lg-3 col-md-6 col-sm-12 pb-1 mix xedapmtb">
+                        <div class="featured__item">
+                            <div class="card product-item border-0 mb-4">
+                                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                    <img class="product-thumbnail img-fluid w-100" src="/FileUpLoad/images/{{ $sp->Image }}" alt="">
+                                </div>
+                                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                    <h6 class="product-name text-truncate mb-3">{{ $sp->Title }} </h6>
+                                    <div class="d-flex justify-content-center">
+                                        @if ($sp->PromotionPrice != 0)
+                                            <h6>{{ number_format($sp->Price, 0, ',', '.') ?? 'Liên hệ'  }}VNĐ</h6>
+                                            <h6 class="text-muted ml-2"><del>{{ number_format($sp->PromotionPrice, 0, ',', '.') ?? 0  }}VNĐ</del></h6>
+                                        
+                                        @else
+                                            <h6>{{ number_format($sp->Price, 0, ',', '.') ?? 'Liên hệ'  }}VNĐ</h6>
+                                                
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="card-footer d-flex justify-content-between bg-light border">
+                                    <a href="{{ route('chitietsanpham', $sp->id) }}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
+                                    <form action="{{ route('cart.store') }}" method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        <input type="hidden" value="{{ $sp->id }}" name="id">
+                                        <input type="hidden" value="{{ $sp->Title }}" name="name">
+                                        <input type="hidden" value="{{ $sp->Image }}" name="image">
+                                        <input type="hidden" value="{{ $sp->Price }}" name="price">
+                                        <input type="hidden" value="1" name="quantity">
+                                        <button class="btn btn-sm btn-add-cart text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add to cart</button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endif
+                @if($sp->CateID == 3)
+                    <div class="col-lg-3 col-md-6 col-sm-12 pb-1 mix xedaptouring">
+                        <div class="featured__item">
+                            <div class="card product-item border-0 mb-4">
+                                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                    <img class="product-thumbnail img-fluid w-100" src="/FileUpLoad/images/{{ $sp->Image }}" alt="">
+                                </div>
+                                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                    <h6 class="product-name text-truncate mb-3">{{ $sp->Title }} </h6>
+                                    <div class="d-flex justify-content-center">
+                                        @if ($sp->PromotionPrice != 0)
+                                            <h6>{{ number_format($sp->Price, 0, ',', '.') ?? 'Liên hệ'  }}VNĐ</h6>
+                                            <h6 class="text-muted ml-2"><del>{{ number_format($sp->PromotionPrice, 0, ',', '.') ?? 0  }}VNĐ</del></h6>
+                                        
+                                        @else
+                                            <h6>{{ number_format($sp->Price, 0, ',', '.') ?? 'Liên hệ'  }}VNĐ</h6>
+                                                
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="card-footer d-flex justify-content-between bg-light border">
+                                    <a href="{{ route('chitietsanpham', $sp->id) }}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
+                                    <form action="{{ route('cart.store') }}" method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        <input type="hidden" value="{{ $sp->id }}" name="id">
+                                        <input type="hidden" value="{{ $sp->Title }}" name="name">
+                                        <input type="hidden" value="{{ $sp->Image }}" name="image">
+                                        <input type="hidden" value="{{ $sp->Price }}" name="price">
+                                        <input type="hidden" value="1" name="quantity">
+                                        <button class="btn btn-sm btn-add-cart text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add to cart</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+                @if($sp->CateID == 4)
+                    <div class="col-lg-3 col-md-6 col-sm-12 pb-1 mix xedapcity">
+                        <div class="featured__item">
+                            <div class="card product-item border-0 mb-4">
+                                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                    <img class="product-thumbnail img-fluid w-100" src="/FileUpLoad/images/{{ $sp->Image }}" alt="">
+                                </div>
+                                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                    <h6 class="product-name text-truncate mb-3">{{ $sp->Title }} </h6>
+                                    <div class="d-flex justify-content-center">
+                                        @if ($sp->PromotionPrice != 0)
+                                            <h6>{{ number_format($sp->Price, 0, ',', '.') ?? 'Liên hệ'  }}VNĐ</h6>
+                                            <h6 class="text-muted ml-2"><del>{{ number_format($sp->PromotionPrice, 0, ',', '.') ?? 0  }}VNĐ</del></h6>
+                                        
+                                        @else
+                                            <h6>{{ number_format($sp->Price, 0, ',', '.') ?? 'Liên hệ'  }}VNĐ</h6>
+                                                
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="card-footer d-flex justify-content-between bg-light border">
+                                    <a href="{{ route('chitietsanpham', $sp->id) }}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
+                                    <form action="{{ route('cart.store') }}" method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        <input type="hidden" value="{{ $sp->id }}" name="id">
+                                        <input type="hidden" value="{{ $sp->Title }}" name="name">
+                                        <input type="hidden" value="{{ $sp->Image }}" name="image">
+                                        <input type="hidden" value="{{ $sp->Price }}" name="price">
+                                        <input type="hidden" value="1" name="quantity">
+                                        <button class="btn btn-sm btn-add-cart text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add to cart</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+                @if($sp->CateID == 5)
+                    <div class="col-lg-3 col-md-6 col-sm-12 pb-1 mix xedaptreem">
+                        <div class="featured__item">
+                            <div class="card product-item border-0 mb-4">
+                                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                    <img class="product-thumbnail img-fluid w-100" src="/FileUpLoad/images/{{ $sp->Image }}" alt="">
+                                </div>
+                                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                    <h6 class="product-name text-truncate mb-3">{{ $sp->Title }} </h6>
+                                    <div class="d-flex justify-content-center">
+                                        @if ($sp->PromotionPrice != 0)
+                                            <h6>{{ number_format($sp->Price, 0, ',', '.') ?? 'Liên hệ'  }}VNĐ</h6>
+                                            <h6 class="text-muted ml-2"><del>{{ number_format($sp->PromotionPrice, 0, ',', '.') ?? 0  }}VNĐ</del></h6>
+                                        
+                                        @else
+                                            <h6>{{ number_format($sp->Price, 0, ',', '.') ?? 'Liên hệ'  }}VNĐ</h6>
+                                                
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="card-footer d-flex justify-content-between bg-light border">
+                                    <a href="{{ route('chitietsanpham', $sp->id) }}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
+                                    <form action="{{ route('cart.store') }}" method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        <input type="hidden" value="{{ $sp->id }}" name="id">
+                                        <input type="hidden" value="{{ $sp->Title }}" name="name">
+                                        <input type="hidden" value="{{ $sp->Image }}" name="image">
+                                        <input type="hidden" value="{{ $sp->Price }}" name="price">
+                                        <input type="hidden" value="1" name="quantity">
+                                        <button class="btn btn-sm btn-add-cart text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add to cart</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
             @endforeach
 
         </div>

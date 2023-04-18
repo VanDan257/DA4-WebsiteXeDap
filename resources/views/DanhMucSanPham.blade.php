@@ -120,8 +120,17 @@
                                     </div>
                                 </div>
                                 <div class="card-footer d-flex justify-content-between bg-light border">
-                                    <a href="{{ route('chitietsanpham', $product->id) }}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i></a>
-                                    <a href="{{ route('addCart', $product) }}" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i></a>
+                                    <a href="{{ route('chitietsanpham', $product->id) }}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1">Detail</i></a>
+                                    <form action="{{ route('cart.store') }}" method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        <input type="hidden" value="{{ $product->id }}" name="id">
+                                        <input type="hidden" value="{{ $product->Title }}" name="name">
+                                        <input type="hidden" value="{{ $product->Image }}" name="image">
+                                        <input type="hidden" value="{{ $product->Price }}" name="price">
+                                        <input type="hidden" value="1" name="quantity">
+                                        <button class="btn btn-sm btn-add-cart text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add to cart</button>
+                                    </form>
+                                    {{-- <a href="{{ route('addCart', $product) }}" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i></a> --}}
                                 </div>
                             </div>
                         </div>

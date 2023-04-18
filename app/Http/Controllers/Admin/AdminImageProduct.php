@@ -45,23 +45,22 @@ class AdminImageProduct extends Controller
     public function store(Request $request)
     {
         //
-        $file = $request->input('Image');
-        dd($file);
-        dd($request);
-        // $img = new imageproductModel();
-        // $img->ProID = $request->input('ProID');
-        // $img->Caption = $request->input('Caption');
-        // $img->ImagePath = $request->file('ImagePath');
-        // $img->IsDefault = 0;
-        // $img->SortOrder = $request->input('SortOrder');
-        // $img->save();
+        $file = $request->file('Image');
+        // dd($file->getClientOriginalName());
+        $img = new imageproductModel();
+        $img->ProID = $request->input('ProID');
+        $img->Caption = $request->input('Caption');
+        $img->ImagePath = $file->getClientOriginalName();
+        $img->IsDefault = 0;
+        $img->SortOrder = $request->input('SortOrder');
+        $img->save();
 
         // // Lưu file vào đường dẫn mong muốn
-        // $file->move('FileUpLoad/images', $file->getClientOriginalName());
+        $file->move('FileUpLoad/images', $file->getClientOriginalName());
 
-        // $imageproducts = imageproductModel::where('ProID', $request->ProID)->get();
+        $imageproducts = imageproductModel::where('ProID', $request->ProID)->get();
         // dd($imageproducts);
-        // return view('admin.ImageProduct.index', compact('imageproducts'));
+        return view('admin.ImageProduct.index', compact('imageproducts'));
 
     }
 
@@ -105,8 +104,11 @@ class AdminImageProduct extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(string $idimg)
     {
         //
+        $image = imageproductModel::find($idimg);
+        $image->delete();
+        return redirect()->route('indeximg')->with('thongbao', 'Xoá ảnh sản phẩm thành công');
     }
 }

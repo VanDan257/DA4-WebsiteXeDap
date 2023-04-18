@@ -62,7 +62,7 @@ Route::prefix('/admin')->middleware(['auth'])->group(function(){
         Route::get('/show/{id}', [AdminImageProduct::class, 'show'])->name('showimg');
         Route::get('/edit/{id}', [AdminImageProduct::class, 'edit'])->name('editimg');
         Route::put('/update/{id}', [AdminImageProduct::class, 'update'])->name('updateimg');
-        Route::delete('/destroy/{id}', [AdminImageProduct::class, 'destroy'])->name('deleteimg');
+        Route::delete('/destroy/{idimg}', [AdminImageProduct::class, 'destroy'])->name('deleteimg');
     });
     Route::get('/dashboard', [HomeAdminController::class, 'index'])->name('dashboard');
 });
