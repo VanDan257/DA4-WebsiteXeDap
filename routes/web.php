@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\HomeAdminController;
 use App\Http\Controllers\Admin\AdminCustomerController;
 use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Admin\AdminImageProduct;
+use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CartController;
@@ -41,16 +42,19 @@ Route::get('/tin-tuc', [HomeController::class, 'TinTuc'])->name('tintuc');
 
 Route::get('/thanh-toan', [HomeController::class, 'ThanhToan'])->name('thanhtoan');
 
+Route::post('/thanh-toan', [HomeController::class, 'ThanhToanStore'])->name('thanhtoanstore');
+
 Route::get('/dang-nhap', [HomeController::class, 'DangNhap'])->name('dangnhap');
 
 Route::get('/admin/login', [HomeAdminController::class, 'login'])->name('login');
 Route::post('/admin/loginstore', [HomeAdminController::class, 'loginstore'])->name('loginstore');
 Route::prefix('/admin')->middleware(['auth'])->group(function(){
+    Route::get('/dashboard', [HomeAdminController::class, 'index'])->name('dashboard');
     Route::prefix('/product')->group(function(){
         Route::get('/index', [AdminProductController::class, 'index'])->name('indexsp');
         Route::get('/create', [AdminProductController::class, 'create'])->name('createsp');
         Route::post('/store', [AdminProductController::class, 'store'])->name('storesp');
-        Route::get('/show', [AdminProductController::class, 'show'])->name('showsp');
+        Route::get('/show/{id}', [AdminProductController::class, 'show'])->name('showsp');
         Route::get('/edit/{id}', [AdminProductController::class, 'edit'])->name('editsp');
         Route::put('/update/{id}', [AdminProductController::class, 'update'])->name('updatesp');
         Route::delete('/destroy/{id}', [AdminProductController::class, 'destroy'])->name('deletesp');
@@ -64,5 +68,13 @@ Route::prefix('/admin')->middleware(['auth'])->group(function(){
         Route::put('/update/{id}', [AdminImageProduct::class, 'update'])->name('updateimg');
         Route::delete('/destroy/{idimg}', [AdminImageProduct::class, 'destroy'])->name('deleteimg');
     });
-    Route::get('/dashboard', [HomeAdminController::class, 'index'])->name('dashboard');
+    Route::prefix('/order')->group(function(){
+        Route::get('/index', [AdminOrderController::class, 'index'])->name('indexdh');
+        Route::get('/create', [AdminOrderController::class, 'create'])->name('createdh');
+        Route::post('/store', [AdminOrderController::class, 'store'])->name('storedh');
+        Route::get('/show/{id}', [AdminOrderController::class, 'show'])->name('showdh');
+        Route::get('/edit/{id}', [AdminOrderController::class, 'edit'])->name('editdh');
+        Route::put('/update/{id}', [AdminOrderController::class, 'update'])->name('updatedh');
+        Route::delete('/destroy/{id}', [AdminProductController::class, 'destroy'])->name('deletedh');
+    });
 });

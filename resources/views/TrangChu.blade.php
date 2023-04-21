@@ -306,38 +306,38 @@
 
     {{-- Danh sách nhà cung cấp --}}
     <!-- Vendor Start -->
-    {{-- <div class="container py-5">
+    <div class="container py-5">
         <div class="row ">
             <div class="col">
                 <div class="owl-carousel vendor-carousel">
                     <div class="vendor-item border p-4">
-                        <img src="img/vendor-1.jpg" alt="">
+                        <img src="/FileUpLoad/Images/vendor-1.jpg" alt="">
                     </div>
                     <div class="vendor-item border p-4">
-                        <img src="img/vendor-2.jpg" alt="">
+                        <img src="/FileUpLoad/Images/vendor-2.jpg" alt="">
                     </div>
                     <div class="vendor-item border p-4">
-                        <img src="img/vendor-3.jpg" alt="">
+                        <img src="/FileUpLoad/Images/vendor-3.jpg" alt="">
                     </div>
                     <div class="vendor-item border p-4">
-                        <img src="img/vendor-4.jpg" alt="">
+                        <img src="/FileUpLoad/Images/vendor-4.jpg" alt="">
                     </div>
                     <div class="vendor-item border p-4">
-                        <img src="img/vendor-5.jpg" alt="">
+                        <img src="/FileUpLoad/Images/vendor-5.jpg" alt="">
                     </div>
                     <div class="vendor-item border p-4">
-                        <img src="img/vendor-6.jpg" alt="">
+                        <img src="/FileUpLoad/Images/vendor-6.jpg" alt="">
                     </div>
                     <div class="vendor-item border p-4">
-                        <img src="img/vendor-7.jpg" alt="">
+                        <img src="/FileUpLoad/Images/vendor-7.jpg" alt="">
                     </div>
                     <div class="vendor-item border p-4">
-                        <img src="img/vendor-8.jpg" alt="">
+                        <img src="/FileUpLoad/Images/vendor-8.jpg" alt="">
                     </div>
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div>
     <!-- Vendor End -->
 
 

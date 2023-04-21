@@ -105,7 +105,7 @@
                             <h5 class="font-weight-bold">Total pay</h5>
                             <h5 class="total-cart font-weight-bold">{{ number_format($sum, 0, ',', '.') }}VNĐ</h5>
                         </div>
-                        <a href="./checkout.html" class="btn-proceed-ckeckout btn btn-block btn-primary my-3 py-3">Proceed To Checkout</a>
+                        <a href="{{ route('thanhtoan') }}" class="btn-proceed-ckeckout btn btn-block btn-primary my-3 py-3">Proceed To Checkout</a>
                     </div>
                 </div>
             </div>

@@ -120,8 +120,8 @@
                                     </div>
                                 </div>
                                 <div class="card-footer d-flex justify-content-between bg-light border">
-                                    <a href="{{ route('chitietsanpham', $product->id) }}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1">Detail</i></a>
-                                    <form action="{{ route('cart.store') }}" method="POST" enctype="multipart/form-data">
+                                    <a href="{{ route('chitietsanpham', $product->id) }}" style="padding: 0;" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Detail</a>
+                                    <form action="{{ route('cart.store') }}" style="margin: 0" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <input type="hidden" value="{{ $product->id }}" name="id">
                                         <input type="hidden" value="{{ $product->Title }}" name="name">

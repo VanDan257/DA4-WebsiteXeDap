@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\categoryModel;
+use App\Models\orderdetailModel;
+use App\Models\orderModel;
 use App\Models\productsModel;
 use App\Models\priceproductModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 
 class HomeController extends Controller
@@ -45,6 +48,38 @@ class HomeController extends Controller
         $sp_tuongtu = productsModel::where('CateID', $product->CateID)->limit(8)->get();
         return view('ChiTietSanPham', compact('product', 'sp_tuongtu', 'images', 'specifications'));
     }
+    public function ThanhToanStore(Request $request){
+        try{
+            // dd($request->all());
+            $order = orderModel::create($request -> all());
+            $carts = Cart::getContent();
+            $newestOrder = orderModel::latest()->first();
+            // dd($newestOrder);
+            foreach($carts as $cart){
+                $data =[
+                    'OrdID' => $newestOrder->id,
+                    'ProID' => $cart->id,
+                    'Quantity' => $cart ->quantity,
+                    'Price' => $cart-> price * $cart -> quantity,
+                ];
+                // dd($data);
+                orderdetailModel::create($data);
+            }
+            Cart::clear();
+            $products = productsModel::all();
+            $productsale = DB::table('product')->where('PromotionPrice', '<>', 0)->limit(8)->get();
+        }catch(\Exception $ex){
+            $this->ThanhToan();
+        }
+        // dd($products);
+        return view('TrangChu', compact('products', 'productsale'));
+    }
+    public function ThanhToan(){
+        $carts = Cart ::getContent();
+        $subtotal = Cart::getSubTotal();
+        $total = Cart::getTotal();
+        return view('ThanhToan', compact('carts', 'subtotal','total'));
+    }
     public function GioHang(){
         return view('GioHang');
     }
@@ -53,8 +88,5 @@ class HomeController extends Controller
     }
     public function DangNhap(){
         return view('DangNhap');
-    }
-    public function ThanhToan(){
-        return view('ThanhToan');
     }
 }
