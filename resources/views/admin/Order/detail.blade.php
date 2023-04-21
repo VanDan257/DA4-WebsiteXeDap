@@ -172,7 +172,8 @@
                 @endforeach
             </tbody>
         </table>
-        {{-- <a style="float:right;" class="btn btn-primary float-left" ng-click="printToCart('dvContainer1')">In hoá đơn</a> --}}
+        <a class="btn btn-primary" href="{{ URL::to('/admin/order/createPdf',$item->id) }}">Export to PDF</a>
+        {{-- <a style="float:right;" href="{{ route('createPDF') }}" class="btn btn-primary" >Export to PDF</a> --}}
     </div>
     <p>
         <a class="btn btn-dark" href="{{ route('indexdh') }}">Quay lại</a>

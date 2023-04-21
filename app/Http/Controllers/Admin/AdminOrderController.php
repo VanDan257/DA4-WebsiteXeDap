@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\orderModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class AdminOrderController extends Controller
 {
@@ -21,6 +22,19 @@ class AdminOrderController extends Controller
         // dd($orders->all());
         return view('admin.Order.index', compact('orders'));
     }
+
+    // Generate PDF
+    public function createPDF() {
+        // retreive all records from db
+        $orders = orderModel::all();
+        $ordersArr = $orders->toArray();
+        // share data to view
+        view()->share('orderproduct',$ordersArr);
+        $pdf = PDF::loadView('/admin/order/detail', $ordersArr);
+        print_r($pdf);
+        // download PDF file with download method
+        // return $pdf->download('pdf_file.pdf');
+      }
 
     /**
      * Show the form for creating a new resource.

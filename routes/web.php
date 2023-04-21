@@ -75,6 +75,7 @@ Route::prefix('/admin')->middleware(['auth'])->group(function(){
         Route::get('/show/{id}', [AdminOrderController::class, 'show'])->name('showdh');
         Route::get('/edit/{id}', [AdminOrderController::class, 'edit'])->name('editdh');
         Route::put('/update/{id}', [AdminOrderController::class, 'update'])->name('updatedh');
-        Route::delete('/destroy/{id}', [AdminProductController::class, 'destroy'])->name('deletedh');
+        Route::delete('/destroy/{id}', [AdminOrderController::class, 'destroy'])->name('deletedh');
+        Route::get('/createPdf', [AdminOrderController::class, 'createPDF']);
     });
 });
