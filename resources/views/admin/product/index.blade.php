@@ -32,7 +32,7 @@
               @if(Session::has('thongbao'))
                 <div class="alert alert-success">{{ Session::get('thongbao') }}</div>
               @endif
-              <table id="example2" class="table table-bordered table-hover">
+              <table id="example2" class="table table-bordered table-hover" id="dataTable">
                 <thead>
                 <tr>
                   <th>Hình ảnh</th>
@@ -53,6 +53,7 @@
                       <a href="#" onclick="removeProduct($product->id, '/admin/product/destroy')"><i class="text-danger fa-solid fa-trash"></i></a> --}}
                       <form action="{{ route('deletesp', $product->id) }}" method="post">
                         <a href="{{ route('editsp',$product->id) }}"><i class="text-warning fa-solid fa-edit"></i></a>
+                        <a href="{{ route('showsp',$product->id) }}"><i class="fa-solid fa-circle-info"></i></a>
                         @csrf
                         @method('DELETE')
                         <button type="submit" style="border: none; outline: none"><i class="text-danger fa-solid fa-trash"></i></button>

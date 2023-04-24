@@ -61,7 +61,7 @@
                                     {{$imageproduct->Caption}}
                                 </td>
                                 <td>
-                                    {{$imageproduct->CsDefault}}
+                                    {{$imageproduct->IsDefault}}
                                 </td>
                                 <td>
                                     {{$imageproduct->SortOrder}}

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\sendMail;
 use App\Models\categoryModel;
 use App\Models\orderdetailModel;
 use App\Models\orderModel;
@@ -66,11 +67,15 @@ class HomeController extends Controller
                 orderdetailModel::create($data);
             }
             Cart::clear();
-            $products = productsModel::all();
-            $productsale = DB::table('product')->where('PromotionPrice', '<>', 0)->limit(8)->get();
         }catch(\Exception $ex){
             $this->ThanhToan();
         }
+
+        // Send Mail
+        sendMail::dispatch($request->input('Email'))->delay(now()->addSecond(2));
+
+        $products = productsModel::all();
+        $productsale = DB::table('product')->where('PromotionPrice', '<>', 0)->limit(8)->get();
         // dd($products);
         return view('TrangChu', compact('products', 'productsale'));
     }

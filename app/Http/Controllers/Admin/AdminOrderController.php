@@ -24,13 +24,13 @@ class AdminOrderController extends Controller
     }
 
     // Generate PDF
-    public function createPDF() {
+    public function createPDF() { 
         // retreive all records from db
         $orders = orderModel::all();
         $ordersArr = $orders->toArray();
         // share data to view
         view()->share('orderproduct',$ordersArr);
-        $pdf = PDF::loadView('/admin/order/detail', $ordersArr);
+        $pdf = PDF::loadView('/admin/order/detail/', $ordersArr);
         print_r($pdf);
         // download PDF file with download method
         // return $pdf->download('pdf_file.pdf');

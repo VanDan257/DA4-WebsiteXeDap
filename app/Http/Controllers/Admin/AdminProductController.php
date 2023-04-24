@@ -59,8 +59,8 @@ class AdminProductController extends Controller
     public function store(Request $request)
     {
 
-        // Upload file
-        $file = $request->file('Image');
+        // $file = $request->file('Image');
+        // dd($file);
         $sp = new productsModel();
         $sp->Title = $request->input('Title');
         $sp->CateID = $request->input('CateID');
@@ -68,10 +68,11 @@ class AdminProductController extends Controller
         $sp->Image = $request->input('Image');
         $sp->Price = $request->input('Price');
         $sp->PromotionPrice = $request->input('PromotionPrice');
+        // dd($sp);
         $sp->save();
 
         // Lưu file vào đường dẫn mong muốn
-        $file->move('FileUpLoad/images', $file->getClientOriginalName());
+        // $file->move('FileUpLoad/images', $file->getClientOriginalName());
 
         // Lấy ra sản phẩm mới nhất
         $newestProduct = productsModel::latest()->first();
@@ -83,10 +84,11 @@ class AdminProductController extends Controller
         $image->Caption = 'Ảnh chính';
         $image->IsDefault = true;
         $image->SortOrder = 1;
+        // dd($image);
         $image->save();
 
         // Thêm danh sách thuộc tính sản phẩm
-        $thongSo = $request->input('Description');
+        $thongSo = $request->input('SpeDescription');
         $speNames = $request->input('SpeName');
         $specifications = [];
 
@@ -111,6 +113,24 @@ class AdminProductController extends Controller
     public function show(string $id)
     {
         //
+        $data = DB::table('product')
+            ->join('category', 'product.CateID', '=', 'category.id')
+            ->select('product.*', 'category.*')
+            ->where('product.id', $id)
+            ->first();
+        $images = DB::table('product')
+            ->join('imageproduct', 'product.id', '=', 'imageproduct.ProID')
+            ->select('imageproduct.*')
+            ->where('imageproduct.ProID', $id)
+            ->get();
+        $specifications = DB::table('product')
+            ->join('specifications', 'product.id', '=', 'specifications.ProID')
+            ->select('specifications.*')
+            ->where('specifications.ProID', $id)
+            ->get();
+            // dd($specifications);
+        
+        return view('admin.product.detail', compact('data', 'specifications', 'images'));
     }
 
     /**
@@ -119,7 +139,17 @@ class AdminProductController extends Controller
     public function edit(string $id)
     {
         $product = productsModel::where('id', $id)->first();
-        return view('admin.product.update', compact('product'));
+        $specifications = DB::table('product')
+            ->join('specifications', 'product.id', '=', 'specifications.ProID')
+            ->select('specifications.*')
+            ->where('specifications.ProID', $id)
+            ->get();
+        $imageproducts = DB::table('product')
+            ->join('imageproduct', 'product.id', '=', 'imageproduct.ProID')
+            ->select('imageproduct.*')
+            ->where('imageproduct.ProID', $id)
+            ->get();
+        return view('admin.product.update', compact('product', 'specifications', 'imageproducts'));
     }
 
     /**
@@ -128,14 +158,29 @@ class AdminProductController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        productsModel::find($id)->update([
-            'Title' => $request->input('Title'),
-            'CateID' => $request->input('CateID'),
-            'Description' => $request->input('Description'),
-            'Price' => $request->input('Price'),
-            'PromotionPrice' => $request->input('PromotionPrice')]);
+        // productsModel::find($id)->update([
+        //     'Title' => $request->input('Title'),
+        //     'CateID' => $request->input('CateID'),
+        //     'Description' => $request->input('Description'),
+        //     'Price' => $request->input('Price'),
+        //     'PromotionPrice' => $request->input('PromotionPrice')]);
 
-        return redirect()->route('indexsp')->with('thongbao', 'Cập nhật sản phẩm thành công');
+        $thongSo = $request->input('SpeDescription');
+        $speNames = $request->input('SpeName');
+        $specifications = [];
+
+        // foreach ($thongSo as $key => $val) {
+        //     $specifications[] = [
+        //         'SpeName' => $speNames[$key],
+        //         'Description' => $val
+        //     ];
+        // }
+
+        // $tskt = specificationproductModel::where('SpeName', '=', $specifications->$speNames)->get();
+
+        dd($request->all());
+
+        // return redirect()->route('indexsp')->with('thongbao', 'Cập nhật sản phẩm thành công');
     }
 
     /**
@@ -144,15 +189,15 @@ class AdminProductController extends Controller
     public function destroy(string $id)
     {
         //
-
         $image = imageproductModel::where('ProID', $id)->first();
-        $image->delete();
+        dd($image);
+        // $image->delete();
 
-        $price = priceproductModel::where('ProID', $id)->first();
-        $price->delete();
+        // $specifications = priceproductModel::where('ProID', $id)->first();
+        // $specifications->delete();
 
-        $product = productsModel::find($id);
-        $product->delete();
-        return redirect()->route('indexsp')->with('thongbao', 'Xoá sản phẩm thành công');
+        // $product = productsModel::find($id);
+        // $product->delete();
+        // return redirect()->route('indexsp')->with('thongbao', 'Xoá sản phẩm thành công');
     }
 }

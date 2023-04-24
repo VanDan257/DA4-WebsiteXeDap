@@ -12,7 +12,7 @@
         <div class="row px-xl-5">
             <div class="col-lg-8 table-responsive mb-5">
                 @if ($message = Session::get('success'))
-                    <div class="p-4 mb-3 bg-green-400 rounded">
+                    <div class="p-4 mb-3 bg-green-400 text-success rounded">
                         <p class="text-green-800">{{ $message }}</p>
                     </div>
                 @endif

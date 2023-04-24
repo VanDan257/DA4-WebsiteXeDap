@@ -40,7 +40,7 @@
         <div class="container">
             <div class="row align-items-center py-3">
                 <div class="col-lg-3 d-none d-lg-block">
-                    <a href="" class="text-decoration-none">
+                    <a href="{{ route('home') }}" class="text-decoration-none">
                         <h2 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">CYCLE</span><span class="text-light">SHOP</span></h2>
                     </a>
                 </div>
@@ -76,7 +76,7 @@
                         <i class="fas fa-heart text-primary"></i>
                         <span class="badge text-light">0</span>
                     </a>
-                    <a href="" class="btn" style="font-size: 20px">
+                    <a href="{{ route('giohang') }}" class="btn" style="font-size: 20px">
                         <i class="fas fa-shopping-cart text-primary"></i>
                         <span class="badge sum-cart text-light">{{ Cart::getTotalQuantity() ?? 0}}</span>
                     </a>

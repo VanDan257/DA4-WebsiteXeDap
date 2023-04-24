@@ -31,7 +31,7 @@ class CartController extends Controller
                 'image' => $request->image,
             )
         ]);
-        session()->flash('success', 'Product is Added to Cart Successfully !');
+        session()->flash('success', 'Sản phẩm được thêm vào giỏ hàng thành công !');
 
         return redirect()->route('home');
     }
@@ -48,7 +48,7 @@ class CartController extends Controller
             ]
         );
 
-        session()->flash('success', 'Item Cart is Updated Successfully !');
+        session()->flash('success', 'Sản phẩm được cập nhật thành công !');
 
         return redirect()->route('giohang');
     }
@@ -56,7 +56,7 @@ class CartController extends Controller
     public function removeCart(Request $request)
     {
         \Cart::remove($request->id);
-        session()->flash('success', 'Item Cart Remove Successfully !');
+        session()->flash('success', 'Sản phẩm được xoá khỏi giỏ hàng thành công !');
 
         return redirect()->route('giohang');
     }

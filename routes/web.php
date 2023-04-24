@@ -50,6 +50,8 @@ Route::get('/admin/login', [HomeAdminController::class, 'login'])->name('login')
 Route::post('/admin/loginstore', [HomeAdminController::class, 'loginstore'])->name('loginstore');
 Route::prefix('/admin')->middleware(['auth'])->group(function(){
     Route::get('/dashboard', [HomeAdminController::class, 'index'])->name('dashboard');
+
+    // Product
     Route::prefix('/product')->group(function(){
         Route::get('/index', [AdminProductController::class, 'index'])->name('indexsp');
         Route::get('/create', [AdminProductController::class, 'create'])->name('createsp');
@@ -59,6 +61,8 @@ Route::prefix('/admin')->middleware(['auth'])->group(function(){
         Route::put('/update/{id}', [AdminProductController::class, 'update'])->name('updatesp');
         Route::delete('/destroy/{id}', [AdminProductController::class, 'destroy'])->name('deletesp');
     });
+
+    // ImageProduct
     Route::prefix('/imageproduct')->group(function(){
         Route::get('/index/{id}', [AdminImageProduct::class, 'index'])->name('indeximg');
         Route::get('/create/{id}', [AdminImageProduct::class, 'create'])->name('createimg');
@@ -68,6 +72,7 @@ Route::prefix('/admin')->middleware(['auth'])->group(function(){
         Route::put('/update/{id}', [AdminImageProduct::class, 'update'])->name('updateimg');
         Route::delete('/destroy/{idimg}', [AdminImageProduct::class, 'destroy'])->name('deleteimg');
     });
+    // Order
     Route::prefix('/order')->group(function(){
         Route::get('/index', [AdminOrderController::class, 'index'])->name('indexdh');
         Route::get('/create', [AdminOrderController::class, 'create'])->name('createdh');

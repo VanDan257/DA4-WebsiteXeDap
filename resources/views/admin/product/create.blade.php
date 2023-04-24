@@ -157,7 +157,7 @@
           desdiv.classList.add('form-group');
           desLabel.innerText = 'Mô tả'
           desInput.classList.add('form-control');
-          desInput.name = 'Description[]';
+          desInput.name = 'SpeDescription[]';
           desdiv.appendChild(desLabel);
           desdiv.appendChild(desInput);
 

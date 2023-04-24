@@ -126,15 +126,6 @@
         asNavFor: ".product-slick-inner"
     })
 
-    
-    // Customize 
-    $('.hero__categories').on('mouseenter', function(){
-        $('.hero__categories ul').slideToggle(400);
-    });
-    $('.hero__categories').on('mouseleave', function(){
-        $('.hero__categories ul').hide(400);
-    });
-
     $(window).on('load', function () {
         $(".loader").fadeOut();
         $("#preloder").delay(200).fadeOut("slow");
