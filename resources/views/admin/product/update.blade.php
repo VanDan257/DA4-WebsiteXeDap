@@ -114,7 +114,7 @@
                                       <td>
                                         <form action="{{ route('deleteimg', $imageproduct->id) }}" id="FormDeleteImg" method="post">
                                           <a href="{{ route('editimg',$imageproduct->id) }}"><i class="text-warning fa-solid fa-edit"></i></a>
-                                          <input type="hiddent" name="id" value="{{ $imageproduct->id }}">
+                                          <input type="hidden" name="id" value="{{ $imageproduct->id }}">
                                           @csrf
                                           {{-- @method('DELETE') --}}
                                           <button type="submit" style="border: none; outline: none"><i class="text-danger fa-solid fa-trash"></i></button>
@@ -133,12 +133,6 @@
                   <!-- /.card-body -->
   
                   <div class="card-footer">
-                    {{-- <form action="{{ route('updatesp', $product->id) }}" method="post">
-                      @csrf
-                      @method('PUT')
-                      <button class="btn btn-primary">Cập nhật</button>
-                    </form> --}}
-
                     <button class="btn btn-primary">Cập nhật</button>
                     <a href="{{ route('indexsp') }}" class="btn btn-primary">Quay lại</a>
                   </div>
@@ -160,7 +154,7 @@
 
         $.ajax({
           url: $(this).attr('action'),
-                method: 'POST',
+                method: 'DELETE',
                 data: $(this).serialize(),
                 success: function(response) {
                     $('#result').html(response);

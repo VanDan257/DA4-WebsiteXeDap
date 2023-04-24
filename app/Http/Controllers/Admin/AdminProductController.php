@@ -158,29 +158,34 @@ class AdminProductController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        // productsModel::find($id)->update([
-        //     'Title' => $request->input('Title'),
-        //     'CateID' => $request->input('CateID'),
-        //     'Description' => $request->input('Description'),
-        //     'Price' => $request->input('Price'),
-        //     'PromotionPrice' => $request->input('PromotionPrice')]);
+        productsModel::find($id)->update([
+            'Title' => $request->input('Title'),
+            'CateID' => $request->input('CateID'),
+            'Description' => $request->input('Description'),
+            'Price' => $request->input('Price'),
+            'PromotionPrice' => $request->input('PromotionPrice')]);
 
         $thongSo = $request->input('SpeDescription');
         $speNames = $request->input('SpeName');
         $specifications = [];
 
-        // foreach ($thongSo as $key => $val) {
-        //     $specifications[] = [
-        //         'SpeName' => $speNames[$key],
-        //         'Description' => $val
-        //     ];
-        // }
+        foreach ($speNames as $key => $val) {
+            // var_dump($key, $val);
+            $specifications[] = [
+                'SpeName' => $val,
+                'Description' => $thongSo[$key]
+            ];
+            $tskt = specificationproductModel::where('SpeName', '=', $val)->get();
+            // echo($tskt);
+            DB::table('specifications')
+            // ->where('SpeName', '=', $val)
+            ->where('id', '=', $tskt->id)
+            ->update(['Description', '=', $thongSo[$key]]);
+        }
 
-        // $tskt = specificationproductModel::where('SpeName', '=', $specifications->$speNames)->get();
 
-        dd($request->all());
 
-        // return redirect()->route('indexsp')->with('thongbao', 'Cập nhật sản phẩm thành công');
+        return redirect()->route('indexsp')->with('thongbao', 'Cập nhật sản phẩm thành công');
     }
 
     /**
