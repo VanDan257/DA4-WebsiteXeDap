@@ -65,14 +65,16 @@ class HomeController extends Controller
                 ];
                 // dd($data);
                 orderdetailModel::create($data);
+
+                // Send Mail
+                // sendMail::dispatch($request->input('Email'))->delay(now()->addSecond(2));
+
             }
             Cart::clear();
         }catch(\Exception $ex){
             $this->ThanhToan();
         }
-
-        // Send Mail
-        sendMail::dispatch($request->input('Email'))->delay(now()->addSecond(2));
+        
 
         $products = productsModel::all();
         $productsale = DB::table('product')->where('PromotionPrice', '<>', 0)->limit(8)->get();

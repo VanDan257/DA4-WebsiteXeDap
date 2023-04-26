@@ -50,6 +50,7 @@ Route::get('/admin/login', [HomeAdminController::class, 'login'])->name('login')
 Route::post('/admin/loginstore', [HomeAdminController::class, 'loginstore'])->name('loginstore');
 Route::prefix('/admin')->middleware(['auth'])->group(function(){
     Route::get('/dashboard', [HomeAdminController::class, 'index'])->name('dashboard');
+    Route::get('/logout', [HomeAdminController::class, 'logout'])->name('logout');
 
     // Product
     Route::prefix('/product')->group(function(){
@@ -72,6 +73,7 @@ Route::prefix('/admin')->middleware(['auth'])->group(function(){
         Route::put('/update/{id}', [AdminImageProduct::class, 'update'])->name('updateimg');
         Route::delete('/destroy/{idimg}', [AdminImageProduct::class, 'destroy'])->name('deleteimg');
     });
+
     // Order
     Route::prefix('/order')->group(function(){
         Route::get('/index', [AdminOrderController::class, 'index'])->name('indexdh');
@@ -83,4 +85,16 @@ Route::prefix('/admin')->middleware(['auth'])->group(function(){
         Route::delete('/destroy/{id}', [AdminOrderController::class, 'destroy'])->name('deletedh');
         Route::get('/createPdf', [AdminOrderController::class, 'createPDF']);
     });
+    
+    // Category
+    Route::prefix('/category')->group(function(){
+        Route::get('/index', [AdminCategoryController::class, 'index'])->name('indexdm');
+        Route::get('/create', [AdminCategoryController::class, 'create'])->name('createdm');
+        Route::post('/store', [AdminCategoryController::class, 'store'])->name('storedm');
+        Route::get('/show/{id}', [AdminCategoryController::class, 'show'])->name('showdm');
+        Route::get('/edit/{id}', [AdminCategoryController::class, 'edit'])->name('editdm');
+        Route::put('/update/{id}', [AdminCategoryController::class, 'update'])->name('updatedm');
+        Route::delete('/destroy/{id}', [AdminCategoryController::class, 'destroy'])->name('deletedm');
+    });
+
 });

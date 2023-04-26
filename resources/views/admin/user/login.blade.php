@@ -37,6 +37,7 @@
                 <div class="card-body">
                   @include('admin.user.alert')
                   <form role="form" action="{{ route('loginstore') }}" method="POST">
+                    @csrf
                     <label>Email</label>
                     <div class="mb-3">
                       <input type="email" name="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="email-addon">
@@ -52,7 +53,6 @@
                     <div class="text-center">
                       <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Sign in</button>
                     </div>
-                    @csrf
                   </form>
                 </div>
                 {{-- <div class="card-footer text-center pt-0 px-lg-2 px-1">

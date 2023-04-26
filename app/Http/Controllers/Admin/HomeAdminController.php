@@ -35,4 +35,12 @@ class HomeAdminController extends Controller
         Session::flash('error', 'Email or Password is incorrect');
         return redirect()->back();
     }
+
+    public function logout(Request $request)
+    {
+        // Xóa Session login, đưa người dùng về trạng thái chưa đăng nhập
+        // $request->session()->flush();
+        Auth::logout();
+        return redirect()->route('login');
+    }
 }
