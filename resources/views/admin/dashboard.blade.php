@@ -1,5 +1,9 @@
 @extends('admin.layout.layout')
 
+@section('NamePage')
+    Dashboard
+@endsection
+
 @section('content')
 {{-- {{ $name }} --}}
     <!-- Content -->

@@ -159,14 +159,14 @@
     <script src=" /Admin/vendor/jquery/jquery.min.js"></script>
     <script src=" /Admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src=" /Admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-    <script src="/Scripts/jquery-3.6.1.min.js"></script>
+    <script src="/Assets/js/jquery-3.6.1.min.js"></script>
 
     <!--   Core JS Files   -->
-    <script src=" /js/core/popper.min.js"></script>
-    <script src=" /js/core/bootstrap.min.js"></script>
-    <script src=" /js/plugins/perfect-scrollbar.min.js"></script>
-    <script src=" /js/plugins/smooth-scrollbar.min.js"></script>
-    <script src=" /js/plugins/chartjs.min.js"></script>
+    <script src=" /Admin/js/core/popper.min.js"></script>
+    <script src=" /Admin/js/core/bootstrap.min.js"></script>
+    <script src=" /Admin/js/plugins/perfect-scrollbar.min.js"></script>
+    <script src=" /Admin/js/plugins/smooth-scrollbar.min.js"></script>
+    <script src=" /Admin/js/plugins/chartjs.min.js"></script>
     <script>
 
         var ctx = document.getElementById("chart-bars").getContext("2d");

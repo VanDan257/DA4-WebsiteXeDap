@@ -1,5 +1,9 @@
 @extends('admin.layout.layout')
 
+@section('NamePage')
+    Danh mục
+@endsection
+
 @section('content')
 
 <!-- Content Header (Page header) -->

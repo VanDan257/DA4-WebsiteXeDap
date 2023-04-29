@@ -1,5 +1,9 @@
 @extends('admin.layout.layout')
 
+@section('NamePage')
+    Xe đạp
+@endsection
+
 @section('content')
 
 <!-- Content Header (Page header) -->

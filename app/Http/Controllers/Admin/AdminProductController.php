@@ -113,24 +113,19 @@ class AdminProductController extends Controller
     public function show(string $id)
     {
         //
-        $data = DB::table('product')
-            ->join('category', 'product.CateID', '=', 'category.id')
-            ->select('product.*', 'category.*')
-            ->where('product.id', $id)
-            ->first();
-        $images = DB::table('product')
-            ->join('imageproduct', 'product.id', '=', 'imageproduct.ProID')
-            ->select('imageproduct.*')
-            ->where('imageproduct.ProID', $id)
-            ->get();
+        $product = productsModel::where('id', $id)->first();
         $specifications = DB::table('product')
             ->join('specifications', 'product.id', '=', 'specifications.ProID')
             ->select('specifications.*')
             ->where('specifications.ProID', $id)
             ->get();
+        $imageproducts = DB::table('product')
+            ->join('imageproduct', 'product.id', '=', 'imageproduct.ProID')
+            ->select('imageproduct.*')
+            ->where('imageproduct.ProID', $id)
+            ->get();
             // dd($specifications);
-        
-        return view('admin.product.detail', compact('data', 'specifications', 'images'));
+        return view('admin.product.detail', compact('product', 'specifications', 'imageproducts'));
     }
 
     /**
@@ -138,6 +133,7 @@ class AdminProductController extends Controller
      */
     public function edit(string $id)
     {
+        
         $product = productsModel::where('id', $id)->first();
         $specifications = DB::table('product')
             ->join('specifications', 'product.id', '=', 'specifications.ProID')
@@ -157,7 +153,28 @@ class AdminProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Xoá tất cả thông số kỹ thuật của sản phẩm
+        $spe = specificationproductModel::where('ProID', $id)->first();
+        if($spe != null) {
+            $spe->delete();
+        }
+
+        // Thêm danh sách thông số sản phẩm
+        $thongSo = $request->input('SpeDescription');
+        $speNames = $request->input('SpeName');
+        $specifications = [];
+
+        foreach ($thongSo as $key => $val) {
+            $specifications[] = [
+                'ProID' => $id,
+                'SpeName' => $speNames[$key],
+                'Description' => $val
+            ];
+        }
+        // dd($specifications);
+
+        specificationproductModel::insert($specifications);
+
         productsModel::find($id)->update([
             'Title' => $request->input('Title'),
             'CateID' => $request->input('CateID'),
@@ -165,23 +182,23 @@ class AdminProductController extends Controller
             'Price' => $request->input('Price'),
             'PromotionPrice' => $request->input('PromotionPrice')]);
 
-        $thongSo = $request->input('SpeDescription');
-        $speNames = $request->input('SpeName');
-        $specifications = [];
+        // $thongSo = $request->input('SpeDescription');
+        // $speNames = $request->input('SpeName');
+        // $specifications = [];
 
-        foreach ($speNames as $key => $val) {
-            // var_dump($key, $val);
-            $specifications[] = [
-                'SpeName' => $val,
-                'Description' => $thongSo[$key]
-            ];
-            $tskt = specificationproductModel::where('SpeName', '=', $val)->get();
-            // echo($tskt);
-            DB::table('specifications')
-            // ->where('SpeName', '=', $val)
-            ->where('id', '=', $tskt->id)
-            ->update(['Description', '=', $thongSo[$key]]);
-        }
+        // foreach ($speNames as $key => $val) {
+        //     // var_dump($key, $val);
+        //     $specifications[] = [
+        //         'SpeName' => $val,
+        //         'Description' => $thongSo[$key]
+        //     ];
+        //     $tskt = specificationproductModel::where('SpeName', '=', $val)->get();
+        //     // echo($tskt);
+        //     DB::table('specifications')
+        //     // ->where('SpeName', '=', $val)
+        //     ->where('id', '=', $tskt->id)
+        //     ->update(['Description', '=', $thongSo[$key]]);
+        // }
 
 
 

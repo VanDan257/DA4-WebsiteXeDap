@@ -1,5 +1,9 @@
 @extends('admin.layout.layout')
 
+@section('NamePage')
+    Xe đạp
+@endsection
+
 @section('content')
 <section class="content-header">
     <div style="margin-top: 24px">

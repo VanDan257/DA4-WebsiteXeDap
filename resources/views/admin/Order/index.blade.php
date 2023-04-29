@@ -1,4 +1,9 @@
 @extends('admin.layout.layout')
+
+@section('NamePage')
+    Hoá đơn
+@endsection
+
 @section('content')
 <table style="margin-top: 12px" class="table table-bordered table-striped" id="dataTable" ng-controller="Order">
     <thead>

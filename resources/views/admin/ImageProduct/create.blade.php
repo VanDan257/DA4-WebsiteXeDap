@@ -1,5 +1,8 @@
-
 @extends('admin.layout.layout')
+
+@section('NamePage')
+    Xe đạp
+@endsection
 
 @section('content')    
     <div class="row">

@@ -1,5 +1,9 @@
 @extends('admin.layout.layout')
 
+@section('NamePage')
+    Xe đạp
+@endsection
+
 @section('content')
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -70,6 +74,7 @@
                               <label for="enterdes">{{ $tskt->SpeName }}</label>
                               <input type="hidden" value="{{ $tskt->SpeName }}" name="SpeName[]">
                               <input type="text" value="{{ $tskt->Description }}" id="enterdes" class="form-control" id="SpeDescription" name="SpeDescription[]">    
+                              <a class="modal-footer cursor-pointer mt-2 text-warning btnXoaThuocTinh">Xoá thuộc tính này</a>
                             </div>
                           @endforeach
                           <div class="card-body">
@@ -156,35 +161,81 @@
 
 @section('js')
   <script>
+
+    // Lấy tất cả các button trong tài liệu
+    var buttons = document.querySelectorAll('.btnXoaThuocTinh');
+
+    // Duyệt qua tất cả các button
+    for (var i = 0; i < buttons.length; i++) {
+      var button = buttons[i];
+
+      // Kiểm tra nếu button nằm trong một thẻ có class "form-group"
+      if (button.closest('.form-group')) {
+
+        // Thêm sự kiện click vào button
+        button.addEventListener('click', function(event) {
+          // Ngăn chặn hành vi mặc định của button (chuyển trang hoặc submit form)
+          event.preventDefault();
+
+          // Lấy phần tử cha của button có class "form-group" và xoá nó
+          var formGroup = button.closest('.form-group');
+          formGroup.remove();
+        });
+      }
+    }
+
+    // btnXoaTT = document.querySelectorAll('.btnXoaThuocTinh');
+    // btnXoaTT.onclick = function() {
+    //   XoaThuocTinh(btnXoaTT);
+    // };
+
+    // function XoaThuocTinh(item){
+    //   // var parentElement = item.parentElement;
+    //   console.log(item);
+    //   // parentElement.remove();
+    // }
+
     function addInput() {
-          // Tạo thẻ input mới
-          var spediv = document.createElement('div');
-          var speLabel = document.createElement('label');
-          var speInput = document.createElement('input');
-          spediv.classList.add('form-group');
-          speLabel.innerText = 'Tên thuộc tính'
-          speInput.classList.add('form-control');
-          speInput.name = 'SpeName[]';
-          spediv.appendChild(speLabel);
-          spediv.appendChild(speInput);
+      // Tạo thẻ input mới
+      var spediv = document.createElement('div');
+      var speLabel = document.createElement('label');
+      var speInput = document.createElement('input');
+      spediv.classList.add('form-group');
+      speLabel.innerText = 'Tên thuộc tính'
+      speInput.classList.add('form-control');
+      speInput.name = 'SpeName[]';
+      spediv.appendChild(speLabel);
+      spediv.appendChild(speInput);
 
-          var desdiv = document.createElement('div');
-          var desLabel = document.createElement('label');
-          var desInput = document.createElement('input');
-          desdiv.classList.add('form-group');
-          desLabel.innerText = 'Mô tả'
-          desInput.classList.add('form-control');
-          desInput.name = 'SpeDescription[]';
-          desdiv.appendChild(desLabel);
-          desdiv.appendChild(desInput);
+      var desdiv = document.createElement('div');
+      var desLabel = document.createElement('label');
+      var desInput = document.createElement('input');
+      desdiv.classList.add('form-group');
+      desLabel.innerText = 'Mô tả'
+      desInput.classList.add('form-control');
+      desInput.name = 'SpeDescription[]';
 
-          // Tìm thẻ div chứa các input hiện tại
-          var inputContainer = document.getElementById('inputContainer');
+      // Tạo một button mới
+      // var button = document.createElement('a');
+      // button.textContent = 'Xoá thuộc tính này';
+      // button.classList.add('modal-footer');
+      // button.classList.add('cursor-pointer');
+      // button.classList.add('mt-2');
+      // button.classList.add('text-warning');
+      // button.onclick = "XoaThuocTinh(this)";
+      // button.classList.add('btnXoaThuocTinh');
 
-          // Thêm input mới vào div
-          inputContainer.appendChild(spediv);
-          inputContainer.appendChild(desdiv);
-        }
+      desdiv.appendChild(desLabel);
+      desdiv.appendChild(desInput);
+
+      // Tìm thẻ div chứa các input hiện tại
+      var inputContainer = document.getElementById('inputContainer');
+
+      // Thêm input mới vào div
+      inputContainer.appendChild(spediv);
+      inputContainer.appendChild(desdiv);
+      inputContainer.appendChild(button);
+    }
   </script>
   <script>
     $(document).ready(function(){

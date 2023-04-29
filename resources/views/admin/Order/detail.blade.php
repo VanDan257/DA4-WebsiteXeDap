@@ -1,5 +1,9 @@
 @extends('admin.layout.layout')
 
+@section('NamePage')
+    Hoá đơn
+@endsection
+
 @section('content')
 <div ng-controller="oderctrl">
 
