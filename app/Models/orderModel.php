@@ -17,7 +17,8 @@ class orderModel extends Model
         'DeliveryAddress',
         'TotalPay',
         'Status',
-        // 'MethodePay',
+        'MethodPayment',
+        'Paid',
         'Note'
     ];
 }

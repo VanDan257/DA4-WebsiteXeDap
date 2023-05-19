@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\HomeAdminController;
 use App\Http\Controllers\Admin\AdminCustomerController;
+use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Admin\AdminImageProduct;
 use App\Http\Controllers\Admin\AdminOrderController;
@@ -27,6 +28,8 @@ Route::get('/', [HomeController::class, 'TrangChu'])->name('home');
 
 Route::get('/danh-muc-san-pham', [HomeController::class, 'DanhMucSanPham'])->name('danhmucsanpham');
 
+Route::post('/search-danh-muc-san-pham', [HomeController::class, 'SearchDanhMucSanPham'])->name('searchdanhmucsanpham');
+
 Route::get('/danh-muc-san-pham/{type}', [HomeController::class, 'DanhMucLoaiSanPham'])->name('danhmucloaisanpham');
 
 Route::get('/chi-tiet-san-pham/id={id}', [HomeController::class, 'ChiTietSanPham'])->name('chitietsanpham');
@@ -44,7 +47,23 @@ Route::get('/thanh-toan', [HomeController::class, 'ThanhToan'])->name('thanhtoan
 
 Route::post('/thanh-toan', [HomeController::class, 'ThanhToanStore'])->name('thanhtoanstore');
 
-Route::get('/dang-nhap', [HomeController::class, 'DangNhap'])->name('dangnhap');
+Route::get('/cai-dat', [HomeController::class, 'KhachHang'])->name('khachhang');
+
+Route::get('/quan-ly-don-hang', [HomeController::class, 'QuanLyDonHang'])->name('quanlydonhang');
+
+Route::post('/cap-nhat-thong-tin', [HomeController::class, 'UpdateKhachHang'])->name('updatekhachhang');
+
+Route::post('/cap-nhat-mat-khau', [HomeController::class, 'CapNhatMatKhau'])->name('capnhatmatkhau');
+
+Route::get('/dang-xuat', [HomeController::class, 'Logout'])->name('dangxuat');
+
+Route::get('/dang-nhap', [HomeController::class, 'Login'])->name('dangnhap');
+
+Route::post('/dang-nhap-post', [HomeController::class, 'LoginStore'])->name('dangnhappost');
+
+Route::get('/dang-ki', [HomeController::class, 'Register'])->name('dangki');
+
+Route::post('/dang-ki-post', [HomeController::class, 'RegisterStore'])->name('dangkipost');
 
 Route::get('/admin/login', [HomeAdminController::class, 'login'])->name('login');
 Route::post('/admin/loginstore', [HomeAdminController::class, 'loginstore'])->name('loginstore');
@@ -95,6 +114,17 @@ Route::prefix('/admin')->middleware(['auth'])->group(function(){
         Route::get('/edit/{id}', [AdminCategoryController::class, 'edit'])->name('editdm');
         Route::put('/update/{id}', [AdminCategoryController::class, 'update'])->name('updatedm');
         Route::delete('/destroy/{id}', [AdminCategoryController::class, 'destroy'])->name('deletedm');
+    });
+
+    // User
+    Route::prefix('/user')->group(function(){
+        Route::get('/index', [AdminUserController::class, 'index'])->name('indexnv');
+        Route::get('/create', [AdminUserController::class, 'create'])->name('createnv');
+        Route::post('/store', [AdminUserController::class, 'store'])->name('storenv');
+        Route::get('/show/{id}', [AdminUserController::class, 'show'])->name('shownv');
+        Route::get('/edit/{id}', [AdminUserController::class, 'edit'])->name('editnv');
+        Route::put('/update/{id}', [AdminUserController::class, 'update'])->name('updatenv');
+        Route::delete('/destroy/{id}', [AdminUserController::class, 'destroy'])->name('deletenv');
     });
 
 });

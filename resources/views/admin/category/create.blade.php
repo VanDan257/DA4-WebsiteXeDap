@@ -1,7 +1,7 @@
 @extends('admin.layout.layout')
 
 @section('NamePage')
-    Danh mục
+    Nhân viên
 @endsection
 
 @section('content')
@@ -10,7 +10,7 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-12">
-              <h1>THÊM MỚI DANH MỤC</h1>
+              <h1>THÊM MỚI NHÂN VIÊN</h1>
             </div>
             {{-- <div class="col-sm-6">
               <h1>DANH SÁCH SINH VIÊN</h1>
@@ -33,26 +33,19 @@
                     @csrf
                     <div class="row">
   
-                        <div class="card-body">
-                          
-                          <div class="form-group">
-                            <label for="entertitle">Tên danh mục</label>
-                            <input type="text" id="CateName" class="form-control" name="CateName">
-                          </div>
-                          {{-- <div class="form-group">
-                            <label for="Num">Num</label>
-                            <input type="text" id="Num" name="Num" class="form-control">
-                          </div> --}}
-                          <div class="form-group">
-                            <label for="CateID">Có phải là danh mục cha không?</label>
-                            <select class="form-control" name="CateParentID" id="CateID">
-                              <option value="" selected> -- Chọn danh mục cha --</option>
-                              @foreach($categories as $category)
-                                <option name="CateID" value="{{ $category->id }}" >{{ $category->CateName  }}</option>
-                              @endforeach
-                              {{-- {!! Form::select('categories', $categories, null, ['class' => 'form-control']) !!} --}}
-                            </select>
-                          </div>
+                      <div class="card-body">
+                        
+                        <div class="form-group">
+                          <label for="entertitle">Tên nhân viên</label>
+                          <input type="text" id="username" class="form-control" name="name">
+                        </div>
+                        <div class="form-group">
+                          <label for="email">Email</label>
+                          <input type="email" id="email" name="email" class="form-control">
+                        </div>
+                        <div class="form-group">
+                          <label for="email">Password</label>
+                          <input type="email" id="password" name="password" class="form-control">
                         </div>
                   <!-- /.card-body -->
   

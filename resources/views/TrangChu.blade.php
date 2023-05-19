@@ -72,23 +72,39 @@
     <!-- Products End -->
 
 
+    
     <!-- Subscribe Start -->
-    <div class="subcribe bg-gray-900">
+    <div class="subcribe bg-gray-900 my-5">
+        <!-- <img src="/FileUpLoad/images/banner.png" class="w-100" alt=""> -->
         <div class="container my-5">
             <div class="row justify-content-md-center py-5 ">
-                <div class="col-md-6 col-12 py-5">
+                <div style="border-right: 1px solid #ccc; display: flex;" class="col-md-3">
+                    <img src="/FileUpLoad/images/baohanh.png" style="width: 60px; height: 60px; margin-right: 8px;" alt="">
                     <div class="text-center mb-2 pb-2">
-                        <h2 class=" text-light px-5 mb-3">REGISTER</h2>
-                        <p class="text-light">Amet lorem at rebum amet dolores. Elitr lorem dolor sed amet diam labore at justo ipsum eirmod duo labore labore.</p>
+                        <h6 class=" text-light mb-3 ">BẢO HÀNH TẬN NHÀ</h6>
+                        <p class="text-light initialism">BẢO HÀNH VÀNG</p>
                     </div>
-                    <form action="">
-                        <div class="input-group">
-                            <input type="text" class="form-control border-white p-4" placeholder="Email...">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary px-4 text-light">Register</button>
-                            </div>
-                        </div>
-                    </form>
+                </div>
+                <div style="border-right: 1px solid #ccc; display: flex;" class="col-md-3">
+                    <img src="/FileUpLoad/images/giaohang.png" style="width: 60px; height: 60px; margin-right: 8px;" alt="">
+                    <div class="text-center mb-2 pb-2">
+                        <h6 class=" text-light mb-3">GIAO HÀNG MIỄN PHÍ</h6>
+                        <p class="text-light initialism">NHANH – UY TÍN</p>
+                    </div>
+                </div>
+                <div style="border-right: 1px solid #ccc; display: flex;" class="col-md-3">
+                    <img src="/FileUpLoad/images/tragop.png" style="width: 60px; height: 60px; margin-right: 8px;" alt="">
+                    <div class="text-center mb-2 pb-2">
+                        <h6 class="text-light mb-3">MUA HÀNG TRẢ GÓP</h6>
+                        <p class="text-light initialism">THỦ TỤC NHANH GỌN</p>
+                    </div>
+                </div>
+                <div class="col-md-3" style=" display: flex;">
+                    <img src="/FileUpLoad/images/chinhhang.png" style="width: 60px; height: 60px; margin-right: 8px;" alt="">
+                    <div class="text-center mb-2 pb-2">
+                        <h6 class=" text-light mb-3">CAM KẾT CHÍNH HÃNG</h6>
+                        <p class="text-light initialism">BẢO DƯỠNG 01 NĂM</p>
+                    </div>
                 </div>
             </div>
         </div>

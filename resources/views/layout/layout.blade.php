@@ -36,9 +36,12 @@
 	
     @include('layout\footer')
 
-    <div class="toast-message">
-      <p class="text-light p-3">Sản phẩm đã được thêm vào giỏ hàng</p>
-    </div>
+    @if(Session::has('message'))
+      <div class="toast-message">
+        <p class="text-light p-3">{{ $message }}</p>
+      </div>
+    @endif
+    
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
@@ -69,6 +72,8 @@
 
     <!-- Template Javascript -->
     <script src="/Assets/js/main.js"></script>
+
+    @yield('js')
 </body>
 
 </html>

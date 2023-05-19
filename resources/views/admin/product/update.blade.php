@@ -184,17 +184,6 @@
       }
     }
 
-    // btnXoaTT = document.querySelectorAll('.btnXoaThuocTinh');
-    // btnXoaTT.onclick = function() {
-    //   XoaThuocTinh(btnXoaTT);
-    // };
-
-    // function XoaThuocTinh(item){
-    //   // var parentElement = item.parentElement;
-    //   console.log(item);
-    //   // parentElement.remove();
-    // }
-
     function addInput() {
       // Tạo thẻ input mới
       var spediv = document.createElement('div');
@@ -214,16 +203,6 @@
       desLabel.innerText = 'Mô tả'
       desInput.classList.add('form-control');
       desInput.name = 'SpeDescription[]';
-
-      // Tạo một button mới
-      // var button = document.createElement('a');
-      // button.textContent = 'Xoá thuộc tính này';
-      // button.classList.add('modal-footer');
-      // button.classList.add('cursor-pointer');
-      // button.classList.add('mt-2');
-      // button.classList.add('text-warning');
-      // button.onclick = "XoaThuocTinh(this)";
-      // button.classList.add('btnXoaThuocTinh');
 
       desdiv.appendChild(desLabel);
       desdiv.appendChild(desInput);

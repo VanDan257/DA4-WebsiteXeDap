@@ -72,10 +72,16 @@
                     </form>
                 </div>
                 <div class="col-lg-3 col-12 d-flex align-items-center justify-content-lg-end justify-content-sm-between">
-                    <a href="" class="btn" style="font-size: 20px">
-                        <i class="fas fa-heart text-primary"></i>
-                        <span class="badge text-light">0</span>
-                    </a>
+                    @if(Session::has('CusName'))
+                        <div class="text-white">{{ Session::get('CusName') }}</div>
+                        <a href="{{ route('khachhang') }}" class="btn" style="font-size: 20px">
+                            <i class="fas fa-user text-primary"></i>
+                        </a>
+                    @else
+                        <a href="{{ route('dangnhap') }}" class="btn" style="font-size: 20px">
+                            <i class="fas fa-user text-primary"></i>
+                        </a>
+                    @endif
                     <a href="{{ route('giohang') }}" class="btn" style="font-size: 20px">
                         <i class="fas fa-shopping-cart text-primary"></i>
                         <span class="badge sum-cart text-light">{{ Cart::getTotalQuantity() ?? 0}}</span>

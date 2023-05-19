@@ -34,6 +34,11 @@
                 <!-- form start -->
                 <form role="form" action="{{ route('storesp') }}" method="POST">
                     @csrf
+                    @error('msg')
+                      <div class="alert alert-danger text-center text-white">
+                        {{ $message }}
+                      </div>
+                    @enderror
                     <div class="row">
                       <div class="col-md-6">
   
@@ -50,14 +55,16 @@
                             </select>
                           </div>
                           <div class="form-group">
-                            <label for="entertitle">Tiêu đề</label>
+                            <label for="entertitle">Tiêu đề</label>@error('Title') <i class="fa-fas-error"></i> @enderror
                             <input type="text" id="Title" class="form-control" name="Title">
+                            @error('Title')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                           </div>
                           <div class="form-group">
                             <label for="inputfile">Image</label>
                             <input type="file" id="inputfile" name="Image" id="Image" class="form-control">
                           </div>
-                          
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -65,6 +72,9 @@
                           <div class="form-group">
                             <label for="entertitle">Giá</label>
                             <input type="text" id="Price" value="0" class="form-control" name="Price">
+                            @error('Price')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                           </div>
                           <div class="form-group">
                             <label for="entertitle">Giá khuyến mại</label>

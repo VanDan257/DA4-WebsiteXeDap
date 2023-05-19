@@ -9849,4 +9849,36 @@ a.text-dark:hover, a.text-dark:focus {
 	margin-right: 0;
 }
 
+
+/* make sidebar nav vertical */ 
+@media (min-width: 768px) {
+  .sidebar-nav .navbar .navbar-collapse {
+    padding: 0;
+    max-height: none;
+  }
+  .sidebar-nav .navbar ul {
+    float: none;
+    display: block;
+  }
+  .sidebar-nav .navbar li {
+    float: none;
+    display: block;
+  }
+  .sidebar-nav .navbar li a {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+}
+
+.active-navbar{
+  font-weight: 600;
+  color: #c98d65;
+}
+
+.log-out{
+  position: absolute;
+  bottom: 20px;
+  right: 10px;
+}
+
 /* End Customize */

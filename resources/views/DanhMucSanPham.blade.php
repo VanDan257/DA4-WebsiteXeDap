@@ -75,13 +75,14 @@
                 <div class="row pb-3">
                     <div class="col-12 pb-1">
                         <div class="d-flex align-items-center justify-content-between mb-4">
-                            <form action="">
+                            <form method="POST" action="{{ route('searchdanhmucsanpham') }}">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search by name">
+                                    @csrf
+                                    <input type="text" name="Title" class="form-control" placeholder="Search by name">
                                     <div class="input-group-append">
-                                        <span class="input-group-text bg-transparent text-primary">
+                                        <button type="submit" class="input-group-text bg-transparent text-primary">
                                             <i class="fa fa-search"></i>
-                                        </span>
+                                        </button>
                                     </div>
                                 </div>
                             </form>
@@ -145,6 +146,6 @@
     </div>
     <!-- Shop End -->
 
-
+    
 
 @endsection

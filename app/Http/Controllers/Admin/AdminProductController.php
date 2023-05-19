@@ -56,8 +56,10 @@ class AdminProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
+
+        // dd($request->all());
 
         // $file = $request->file('Image');
         // dd($file);
@@ -71,8 +73,8 @@ class AdminProductController extends Controller
         // dd($sp);
         $sp->save();
 
-        // Lưu file vào đường dẫn mong muốn
-        // $file->move('FileUpLoad/images', $file->getClientOriginalName());
+        // // Lưu file vào đường dẫn mong muốn
+        // // $file->move('FileUpLoad/images', $file->getClientOriginalName());
 
         // Lấy ra sản phẩm mới nhất
         $newestProduct = productsModel::latest()->first();

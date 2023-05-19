@@ -7,23 +7,43 @@
             <div class="col-lg-8">
                 <div class="mb-4">
                     <h4 class="font-weight-semi-bold mb-4">Thông tin người nhận</h4>
+                    {{-- @if ($errors->any())
+                        <div class="alert alert-danger text-center">
+                            Vui lòng điền đầy đủ thông tin
+                            @foreach ($errors->all() as $err)
+                                <p>{{ $err }}</p>
+                            @endforeach
+                        </div>
+                    @endif --}}
                     <div class="row">
                         @csrf
                         <div class="col-md-6 form-group">
                             <label>Họ và tên</label>
                             <input class="form-control" name="Recipient" type="text">
+                            @error('Recipient')
+                                <div class="text-danger">Vui lòng nhập tên người nhận</div>
+                            @enderror
                         </div>
-                        <div class="col-md-6 form-group">
+                        <div class="col-md-6 form-group"> 
                             <label>Email</label>
                             <input class="form-control" name="Email" type="text">
+                            @error('Email')
+                                <div class="text-danger">Vui lòng nhập đúng định dạng email</div>
+                            @enderror
                         </div>
                         <div class="col-md-6 form-group">
                             <label>Số điện thoại</label>
                             <input class="form-control" name="Phone" type="text">
+                            @error('Phone')
+                                <div class="text-danger">Vui lòng nhập số điện thoại người nhận</div>
+                            @enderror
                         </div>
                         <div class="col-md-6 form-group">
                             <label>Địa chỉ</label>
                             <input class="form-control" name="DeliveryAddress" type="text">
+                            @error('DeliveryAddress')
+                                <div class="text-danger">Vui lòng nhập địa chỉ người nhận</div>
+                            @enderror
                         </div>
                         <div class="col-md-6 form-group">
                             <label>Ghi chú</label>
@@ -31,7 +51,7 @@
                         </div>
                         <div class="col-md-12 form-group">
                             <div class="custom-control custom-checkbox">
-                                <a href="#" class="link-dark">Create an account</a>
+                                <a href="{{ route('dangki') }}" class="link-dark">Create an account</a>
                             </div>
                         </div>
                         <input type="hidden" name="TotalPay" value="">
@@ -48,10 +68,13 @@
                         <div class="order-products">
                             @foreach ($carts as $item)
                                 
-                                <div class="d-flex justify-content-between">
-                                    <p>{{ $item->name }}</p>
-                                    <p>{{ number_format($item->price, 0, ',', '.') }}VNĐ</p>
+                            <div class="d-flex justify-content-between">
+                                <p>{{ $item->name }}</p>
+                                <div class="d-flex">
+                                    <p>{{ $item->quantity }} x </p>
+                                    <p> {{ number_format($item->price, 0, ',', '.') }}VNĐ</p>
                                 </div>
+                            </div>
                             @endforeach
                         </div>
                     </div>
@@ -66,26 +89,26 @@
                     <div class="card-header bg-gray-200 border-0">
                         <h4 class="font-weight-semi-bold m-0">Thanh Toán</h4>
                     </div>
-                    {{-- <div class="card-body">
+                    <div class="card-body">
                         <div class="form-group">
                             <div class="custom-control custom-radio">
-                                <input type="radio" class="custom-control-input" name="payment" id="paypal">
-                                <label class="custom-control-label" name="MethodPay" value="Paypal" for="paypal">Paypal</label>
+                                <input type="radio" value="Thanh toán bằng Paypal" class="custom-control-input" name="MethodPayment" id="paypal">
+                                <label class="custom-control-label" value="Paypal" for="paypal">Paypal</label>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="custom-control custom-radio">
-                                <input type="radio" class="custom-control-input" name="payment" id="directcheck">
-                                <label class="custom-control-label"  name="MethodPay" value="Thanh toán khi nhận hàng" for="directcheck">Thanh toán khi nhận hàng</label>
+                                <input type="radio" value="Thanh toán khi nhận hàng" class="custom-control-input" name="MethodPayment" id="directcheck">
+                                <label class="custom-control-label" value="Thanh toán khi nhận hàng" for="directcheck">Thanh toán khi nhận hàng</label>
                             </div>
                         </div>
                         <div class="">
                             <div class="custom-control custom-radio">
-                                <input type="radio" class="custom-control-input" name="payment" id="banktransfer">
-                                <label class="custom-control-label" name="MethodPay" value="Chuyển khoản" for="banktransfer">Chuyển khoản</label>
+                                <input type="radio" value="Chuyển khoản" class="custom-control-input" name="MethodPayment" id="banktransfer">
+                                <label class="custom-control-label" value="Chuyển khoản" for="banktransfer">Chuyển khoản</label>
                             </div>
                         </div>
-                    </div>--}}
+                    </div>
                     <input type="hidden" name="Status" value="Đã xác nhận"> 
                     <input type="hidden" name="TotalPay" value="{{ $total }}"> 
                     <div class="card-footer border-secondary bg-transparent">

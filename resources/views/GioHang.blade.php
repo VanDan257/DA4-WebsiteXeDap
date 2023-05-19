@@ -42,19 +42,19 @@
 
                                     <div class="input-group quantity mx-auto" style="width: 100px;">
 
-                                        <div class="input-group-btn">
+                                        {{-- <div class="input-group-btn">
                                             <button class="btn btn-sm btn-primary btn-minus" >
                                                 <i class="fa fa-minus"></i>
                                             </button>
-                                        </div>
+                                        </div> --}}
                                         <input type="hidden" name="id" value="{{ $item->id}}" >
-                                        <input type="text"  name="quantity" value="{{ $item->quantity }}"  class="form-control form-control-sm bg-gray-200 text-center" value="{{ $item->quantity }}">
-                                        <input type="hidden" class="form-control" name="quantityUpdate" value="{{ $item->quantity }}">
-                                        <div class="input-group-btn">
+                                        <input type="number" min="1"  name="quantity" value="{{ $item->quantity }}"  class="form-control form-control-sm bg-gray-200 text-center" value="{{ $item->quantity }}">
+                                        {{-- <input type="hidden" class="form-control" name="quantityUpdate" value="{{ $item->quantity }}"> --}}
+                                        {{-- <div class="input-group-btn">
                                             <button class="btn btn-sm btn-primary btn-plus">
                                                 <i class="fa fa-plus"></i>
                                             </button>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     @csrf
                                     <input type="hidden" name="id" value="{{ $item->id}}" >
