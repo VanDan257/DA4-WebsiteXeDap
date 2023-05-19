@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use stdClass;
 
 class HomeController extends Controller
 {
@@ -84,6 +85,21 @@ class HomeController extends Controller
         return redirect()->back()->with('msg', 'Thay đổi mật khẩu thành công');
     }
 
+    public function QuanLyDonHang(){
+        $customer_id = Session::get('id');
+        // $order = new stdClass();
+        $orders = DB::table('orderproduct')
+            ->join('orderproductdetail', 'orderproduct.id', '=', 'orderproductdetail.ordid')
+            ->join('product', 'product.id', '=', 'orderproductdetail.proid')
+            ->select('orderproductdetail.*', 'product.Title', 'product.Image', 'orderproduct.*')
+            ->where('orderproduct.CusID', '=', $customer_id)
+            ->get();
+            // ->all();
+            // printf($orders);
+            // $ordersArr = $orders->toArray();
+        return view('QuanLyDonHang', ['orders' => $orders]);
+    }
+
     public function ChiTietSanPham(Request $request){
         $images = DB::table('product')
         ->join('imageproduct', 'Product.id', '=', 'imageproduct.ProID')
@@ -129,7 +145,9 @@ class HomeController extends Controller
             $order->DeliveryAddress = $request->input('DeliveryAddress');
             $order->CusID = $customer_id;
             $order->TotalPay = $request->input('TotalPay');
-            $order->Status = $request->input('Status');
+            $order->MethodPayment = $request->input('MethodPayment');
+            $order->Paid = 0;
+            $order->Status = 'Chờ xác nhận';
             $order->Note = $request->input('Note');
             $order->save();
 

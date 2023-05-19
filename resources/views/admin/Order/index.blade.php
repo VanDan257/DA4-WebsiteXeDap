@@ -51,15 +51,17 @@
                     {{$item->DeliveryAddress}}
                 </td>
                 <td>
-                    {{$item->Status}}
+                    @if ($item->Status == 'Giao hàng thành công')
+                        {{$item->Status}}
+                    @else
+                        {{ $item->Status }}, 
+                        @if ($item->Paid == 0)
+                            <div>Chưa thanh toán</div> 
+                        @else
+                            <div>Đã thanh toán</div> 
+                        @endif
+                    @endif
                 </td>
-                {{-- <td>
-                    {{$item->Note}}
-                </td>
-                
-                <td>
-                    {{$item->CusID}}
-                </td> --}}
                 <td>
                     {{ number_format($item->TotalPay, 0, ',', '.')}}VNĐ
                 </td>

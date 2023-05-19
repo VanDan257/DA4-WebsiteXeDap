@@ -36,17 +36,6 @@
             <div class="col-md-6">
 
                 <div class="text-dark text-bold">
-                    Trạng thái
-                </div>
-    
-                <div>
-                    {{ $order->Status }}
-                </div>
-            </div>
-
-            <div class="col-md-6">
-
-                <div class="text-dark text-bold">
                     Ghi chú
                 </div>
     
@@ -85,14 +74,38 @@
                 @Html.DisplayFor(model => model.Customer.CusName)
             </div> --}}
 
-            <div class="text-dark text-bold">
-                Tổng tiền
+            
+
+            <div class="col-md-6">
+
+                <div class="text-dark text-bold">
+                    Phương thức thanh toán
+                </div>
+    
+                <div>
+                    {{ $order->MethodPayment }}
+                </div>
             </div>
 
-            <div>
-                {{ number_format($order->TotalPay, 0, ',', '.')}}VNĐ
-            </div>
+            <div class="col-md-6">
 
+                <div class="text-dark text-bold">
+                    Trạng thái
+                </div>
+    
+                <div>
+                    {{ $order->Status }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="text-dark text-bold">
+                    Tổng tiền
+                </div>
+
+                <div>
+                    {{ number_format($order->TotalPay, 0, ',', '.')}}VNĐ
+                </div>
+            </div>
         </div>
 
         {{-- <h3>Thông tin khách hàng</h3>
@@ -197,18 +210,20 @@
             </div>
         </div>
         <!-- <hr> -->
-        <div class="navbar" style="height: 60px;">
-            <div>
-                <i class="fa-solid fa-check"></i>
-                Giao hàng
+        <form action="">
+            <div class="navbar" style="height: 60px;">
+                <div>
+                    <i class="fa-solid fa-check"></i>
+                    Giao hàng
+                </div>
+                <div>
+                    <button class="btn btn-info">Đã giao cho Shipper</button>
+                </div>
             </div>
-            <div>
-                <button class="btn btn-info">Đã giao cho Shipper</button>
+            <div class="navbar">
+                <button class="btn btn-success">Giao hàng thành công</button>
             </div>
-        </div>
-        <div class="navbar">
-            <button class="btn btn-success">Giao hàng thành công</button>
-        </div>
+        </form>
     </div>
     <div style="margin-top: 20px">
         <a class="btn btn-primary" href="{{ URL::to('/admin/order/createPdf',$item->id) }}">Export to PDF</a>

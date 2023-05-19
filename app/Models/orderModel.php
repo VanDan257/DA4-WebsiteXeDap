@@ -11,7 +11,6 @@ class orderModel extends Model
     protected $table = 'OrderProduct';
     protected $fillable = [
         'CusID',
-        'OrderDate',
         'Phone',
         'Recipient',
         'DeliveryAddress',
