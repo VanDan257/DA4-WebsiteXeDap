@@ -98,18 +98,25 @@
                     <div class="input-group quantity mr-3" style="width: 130px;">
                         <div class="input-group-btn">
                             <button class="btn btn-primary btn-minus" >
-                            <i class="fa fa-minus"></i>
+                                <i class="fa fa-minus"></i>
                             </button>
                         </div>
-                        <input type="text" class="form-control bg-gray-200 text-center" value="1">
-                        <input type="hidden" name="quantity" value="1">
+                        <input type="text" name="quantity" class="form-control bg-gray-200 text-center" value="1">
                         <div class="input-group-btn">
                             <button class="btn btn-primary btn-plus">
                                 <i class="fa fa-plus"></i>
                             </button>
                         </div>
                     </div>
-                    <button class="btn btn-primary btn-add-cart text-light px-3"><i class="fa fa-shopping-cart mr-1"></i> Thêm giỏ hàng</button>
+                    <form action="{{ route('cart.store') }}" method="POST">
+                        @csrf
+                        <input type="hidden" value="{{ $product->id }}" name="id">
+                        <input type="hidden" value="{{ $product->Title }}" name="name">
+                        <input type="hidden" value="{{ $product->Image }}" name="image">
+                        <input type="hidden" value="{{ $product->Price }}" name="price">
+                        <input type="hidden" value="1" name="quantity">
+                        <button class="btn btn-primary btn-add-cart text-light px-3"><i class="fa fa-shopping-cart mr-1"></i> Thêm giỏ hàng</button>
+                    </form>
                 </div>
                 <div class="d-flex pt-2">
                     <p class="text-dark font-weight-medium mb-0 mr-2">Share on:</p>

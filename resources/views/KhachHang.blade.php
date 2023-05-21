@@ -50,10 +50,17 @@
                             @error('Address')
                                 <div style="color: red">{{ $message }}</div>
                             @enderror
-                            <div>
-                                <label style="width: 120; display: flex; justify-content: center;" for="Address">Địa chỉ</label>
-                                <input id="Address" name="Address" type="Address" value="{{ $customer->Address }}"  placeholder="Số 250 - Minh Khai - Hai Bà Trưng - Hà Nội"/>
-                            </div>
+                            @if ($customer->Address == null)
+                                <div>
+                                    <label style="width: 120; display: flex; justify-content: center;" for="Address">Địa chỉ</label>
+                                    <input id="Address" name="Address" type="text" placeholder="Số 250 - Minh Khai - Hai Bà Trưng - Hà Nội"/>
+                                </div>
+                            @else    
+                                <div>
+                                    <label style="width: 120; display: flex; justify-content: center;" for="Address">Địa chỉ</label>
+                                    <input id="Address" name="Address" type="text" value="{{ $customer->Address }}"  placeholder="Số 250 - Minh Khai - Hai Bà Trưng - Hà Nội"/>
+                                </div>
+                            @endif
                         </fieldset>
                         <fieldset>
                             @error('Email')
@@ -138,25 +145,5 @@
         }
         Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
-
-    // $(document).ready(function() {
-    //     $('#updatePassword').submit(function(e) {
-    //         e.preventDefault();
-            
-    //         var formData = $(this).serialize();
-
-    //         // console.log(formData);
-            
-    //         $.ajax({
-    //             url: {{ route('capnhatmatkhau') }},
-    //             type: 'POST',
-    //             data: formData,
-    //             success: function(response) {
-    //                 // Xử lý kết quả trả về ở đây
-    //                 console.log(response);
-    //             }
-    //         });
-    //     });
-    // });
 </script>
 @endsection

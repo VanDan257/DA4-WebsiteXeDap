@@ -55,8 +55,15 @@ class HomeController extends Controller
         return view('KhachHang', compact('customer'));
     }
 
-    public function UpdateKhachHang(LoginRequest $request){
+    public function UpdateKhachHang(Request $request){
         $customer_id = Session::get('id');
+        // $request->validate([
+        //     'CusName' => 'required|min:6',
+        //     'Phone'=>  'regex:/^([0-9\s\-\+\(\)]*)$/',
+        //     'Email' => 'required|email',
+        //     'Password' => 'required|min:6',
+        // ]);
+        // dd($request->all());
         customerModel::find($customer_id)->update([
             'CusName' => $request->input('CusName'),
             'Phone' => $request->input('Phone'),
@@ -89,15 +96,24 @@ class HomeController extends Controller
         $customer_id = Session::get('id');
         // $order = new stdClass();
         $orders = DB::table('orderproduct')
-            ->join('orderproductdetail', 'orderproduct.id', '=', 'orderproductdetail.ordid')
-            ->join('product', 'product.id', '=', 'orderproductdetail.proid')
-            ->select('orderproductdetail.*', 'product.Title', 'product.Image', 'orderproduct.*')
             ->where('orderproduct.CusID', '=', $customer_id)
             ->get();
-            // ->all();
-            // printf($orders);
-            // $ordersArr = $orders->toArray();
-        return view('QuanLyDonHang', ['orders' => $orders]);
+        return view('QuanLyDonHang', ['orders' => $orders, 'index'=>$index = 0, 'indexdh'=>$indexdh = 0]);
+    }
+
+    public function LayCTDHTheoHD($id){
+        $ctdh = DB::table('orderproductdetail')
+        ->join('product', 'product.id', '=', 'orderproductdetail.proid')
+        ->select('orderproductdetail.*', 'product.Title', 'product.Image')
+        ->where('orderproductdetail.OrdID', '=', $id)
+        ->get();
+        return $ctdh;
+    }
+
+    public function CapNhatTrangThaiDH(Request $request){
+        orderModel::find($request->input('id'))->update([
+            'Status' => $request->input('Status')]);
+        return redirect()->back();
     }
 
     public function ChiTietSanPham(Request $request){

@@ -151,48 +151,70 @@
 @endsection
 
 @section('js')
-      <script>
+  <script>
+    
+    // Duyệt qua tất cả các button
+    for (var i = 0; i < buttons.length; i++) {
+      var button = buttons[i];
 
-        function addInput() {
-          // Tạo thẻ input mới
-          var spediv = document.createElement('div');
-          var speLabel = document.createElement('label');
-          var speInput = document.createElement('input');
-          spediv.classList.add('form-group');
-          speLabel.innerText = 'Tên thuộc tính'
-          speInput.classList.add('form-control');
-          speInput.name = 'SpeName[]';
-          spediv.appendChild(speLabel);
-          spediv.appendChild(speInput);
+      // Kiểm tra nếu button nằm trong một thẻ có class "form-group"
+      if (button.closest('.form-group')) {
 
-          var desdiv = document.createElement('div');
-          var desLabel = document.createElement('label');
-          var desInput = document.createElement('input');
-          desdiv.classList.add('form-group');
-          desLabel.innerText = 'Mô tả'
-          desInput.classList.add('form-control');
-          desInput.name = 'SpeDescription[]';
-          desdiv.appendChild(desLabel);
-          desdiv.appendChild(desInput);
+        // Thêm sự kiện click vào button
+        button.addEventListener('click', function(event) {
+          // Ngăn chặn hành vi mặc định của button (chuyển trang hoặc submit form)
+          event.preventDefault();
 
-          // Tìm thẻ div chứa các input hiện tại
-          var inputContainer = document.getElementById('inputContainer');
-
-          // Thêm input mới vào div
-          inputContainer.appendChild(spediv);
-          inputContainer.appendChild(desdiv);
-        }
-
-        $('#addAtribute').click(function(){
-            $('.pop-up').addClass('open');
+          // Lấy phần tử cha của button có class "form-group" và xoá nó
+          var formGroup = button.closest('.form-group');
+          formGroup.remove();
         });
+      }
+    }
 
-        $('.pop-up .close').click(function(){
-            $('.pop-up').removeClass('open');
-        });
-      </script>
-    <script src="/Assets/ckeditor/ckeditor.js"></script>
-    <script>
-        CKEDITOR.replace('Description');
-    </script>
+    function addInput() {
+      // Tạo thẻ input mới
+      var spediv = document.createElement('div');
+      var speLabel = document.createElement('label');
+      var speInput = document.createElement('input');
+      spediv.classList.add('form-group');
+      speLabel.innerText = 'Tên thuộc tính'
+      speInput.classList.add('form-control');
+      speInput.name = 'SpeName[]';
+      spediv.appendChild(speLabel);
+      spediv.appendChild(speInput);
+
+      var desdiv = document.createElement('div');
+      var desLabel = document.createElement('label');
+      var desInput = document.createElement('input');
+      desdiv.classList.add('form-group');
+      desLabel.innerText = 'Mô tả'
+      desInput.classList.add('form-control');
+      desInput.name = 'SpeDescription[]';
+      desdiv.appendChild(desLabel);
+      desdiv.appendChild(desInput);
+
+      // Tìm thẻ div chứa các input hiện tại
+      var inputContainer = document.getElementById('inputContainer');
+
+      // Thêm input mới vào div
+      inputContainer.appendChild(spediv);
+      inputContainer.appendChild(desdiv);
+      inputContainer.appendChild(button);
+    }
+
+    var buttons = document.querySelectorAll('.btnXoaThuocTinh');
+
+    $('#addAtribute').click(function(){
+        $('.pop-up').addClass('open');
+    });
+
+    $('.pop-up .close').click(function(){
+        $('.pop-up').removeClass('open');
+    });
+  </script>
+  <script src="/Assets/ckeditor/ckeditor.js"></script>
+  <script>
+      CKEDITOR.replace('Description');
+  </script>
 @endsection

@@ -74,7 +74,7 @@
                               <label for="enterdes">{{ $tskt->SpeName }}</label>
                               <input type="hidden" value="{{ $tskt->SpeName }}" name="SpeName[]">
                               <input type="text" value="{{ $tskt->Description }}" id="enterdes" class="form-control" id="SpeDescription" name="SpeDescription[]">    
-                              <a class="modal-footer cursor-pointer mt-2 text-warning btnXoaThuocTinh">Xoá thuộc tính này</a>
+                              <a href="{{ route('deletettsp', $tskt->id) }}" class="modal-footer cursor-pointer mt-2 text-warning">Xoá thuộc tính này</a>
                             </div>
                           @endforeach
                           <div class="card-body">
@@ -110,30 +110,30 @@
                           </thead>
                           <tbody>
                               @foreach ($imageproducts as $imageproduct)
-                                  <tr>
-                                      <td>
-                                              <img src="/FileUpLoad/images/{{$imageproduct->ImagePath}}" style="width: 150px;" />
-                                          </a>
-                                      </td>
-                                      <td>
-                                          {{$imageproduct->Caption}}
-                                      </td>
-                                      <td>
-                                          {{$imageproduct->IsDefault}}
-                                      </td>
-                                      <td>
-                                          {{$imageproduct->SortOrder}}
-                                      </td>
-                                      <td>
-                                        <form action="{{ route('deleteimg', $imageproduct->id) }}" id="FormDeleteImg" method="post">
-                                          <a href="{{ route('editimg',$imageproduct->id) }}"><i class="text-warning fa-solid fa-edit"></i></a>
-                                          <input type="hidden" name="id" value="{{ $imageproduct->id }}">
-                                          @csrf
-                                          {{-- @method('DELETE') --}}
-                                          <button type="submit" style="border: none; outline: none"><i class="text-danger fa-solid fa-trash"></i></button>
-                                        </form>                          
-                                      </td>
-                                  </tr>
+                                <tr>
+                                    <td>
+                                            <img src="/FileUpLoad/images/{{$imageproduct->ImagePath}}" style="width: 150px;" />
+                                        </a>
+                                    </td>
+                                    <td>
+                                        {{$imageproduct->Caption}}
+                                    </td>
+                                    <td>
+                                        {{$imageproduct->IsDefault}}
+                                    </td>
+                                    <td>
+                                        {{$imageproduct->SortOrder}}
+                                    </td>
+                                    <td>
+                                      <form action="{{ route('deleteimg', $imageproduct->id) }}" id="FormDeleteImg" method="post">
+                                        <a href="{{ route('editimg',$imageproduct->id) }}"><i class="text-warning fa-solid fa-edit"></i></a>
+                                        <input type="hidden" name="id" value="{{ $imageproduct->id }}">
+                                        @csrf
+                                        {{-- @method('DELETE') --}}
+                                        <button type="submit" style="border: none; outline: none"><i class="text-danger fa-solid fa-trash"></i></button>
+                                      </form>                          
+                                    </td>
+                                </tr>
                               @endforeach
                           </tbody>
                           <div style="margin-top: 24px">
@@ -165,9 +165,11 @@
     // Lấy tất cả các button trong tài liệu
     var buttons = document.querySelectorAll('.btnXoaThuocTinh');
 
+    console.log(buttons);
     // Duyệt qua tất cả các button
     for (var i = 0; i < buttons.length; i++) {
       var button = buttons[i];
+
 
       // Kiểm tra nếu button nằm trong một thẻ có class "form-group"
       if (button.closest('.form-group')) {
@@ -179,7 +181,10 @@
 
           // Lấy phần tử cha của button có class "form-group" và xoá nó
           var formGroup = button.closest('.form-group');
-          formGroup.remove();
+          console.log(formGroup);
+          if (formGroup !== null) {
+            formGroup.remove();
+          }
         });
       }
     }

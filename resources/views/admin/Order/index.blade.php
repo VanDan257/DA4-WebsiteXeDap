@@ -66,11 +66,7 @@
                     {{ number_format($item->TotalPay, 0, ',', '.')}}VNĐ
                 </td>
                 <td>
-                    
-                    <a href="{{ route('editdh', $item->id)}}"><i class="text-warning fa-solid fa-pen-to-square"></i></a>
                     <a href="{{ route('showdh', $item->id)}}"><i class="fa-solid fa-circle-info"></i></a>
-                    <a href="{{ route('deletedh', $item->id)}}"><i class="text-danger fa-solid fa-trash"></i></a>
-
                 </td>
             </tr>
         @endforeach

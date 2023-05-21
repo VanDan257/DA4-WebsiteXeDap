@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\customerModel;
 use App\Models\orderModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -68,24 +69,14 @@ class AdminOrderController extends Controller
         //
         // dd($id);
         $order = orderModel::find($id);
+        $customer = customerModel::find($order->CusID);
         $data = DB::table('orderproduct')
             ->join('orderproductdetail', 'orderproduct.id', '=', 'orderproductdetail.ordid')
             ->join('product', 'product.id', '=', 'orderproductdetail.proid')
             ->select('orderproductdetail.*', 'product.*')
             ->where('orderproductdetail.ordid', '=', $id)
             ->get();
-        return view('admin.Order.detail', compact('order', 'data'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return view('admin.Order.detail', compact('order', 'data', 'customer'));
     }
 
     /**
@@ -95,19 +86,22 @@ class AdminOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updateStatus(Request $request, string $id)
     {
         //
-    }
+        $status = $request->input('Status');
+        $paid = $request->input('Paid');
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        if(isset($status)){
+            orderModel::find($id)->update([
+                'Status' => $status
+            ]);
+        }
+        else if(isset($paid)){
+            orderModel::find($id)->update([
+                'Paid' => $paid
+            ]);
+        }
+        return redirect()->back();
     }
 }

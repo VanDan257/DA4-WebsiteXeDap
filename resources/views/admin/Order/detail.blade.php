@@ -66,16 +66,6 @@
                 </div>
             </div>
 
-            {{-- <div>
-                Tên khách hàng
-            </div>
-
-            <div>
-                @Html.DisplayFor(model => model.Customer.CusName)
-            </div> --}}
-
-            
-
             <div class="col-md-6">
 
                 <div class="text-dark text-bold">
@@ -94,7 +84,16 @@
                 </div>
     
                 <div>
-                    {{ $order->Status }}
+                    @if ($order->Status == 'Giao hàng thành công')
+                        {{$order->Status}}
+                    @else
+                        {{ $order->Status }}, 
+                        @if ($order->Paid == 0)
+                            <div>Chưa thanh toán</div> 
+                        @else
+                            <div>Đã thanh toán</div> 
+                        @endif
+                    @endif
                 </div>
             </div>
             <div class="col-md-6">
@@ -108,7 +107,7 @@
             </div>
         </div>
 
-        {{-- <h3>Thông tin khách hàng</h3>
+        <h3>Thông tin khách hàng</h3>
         <table class="table table-bordered table-striped" id="dataTable">
             <thead>
                 <tr>
@@ -116,41 +115,28 @@
                         Tên khách hàng
                     </th>
                     <th>
-                        Địa chỉ
-                    </th>
-                    <th>
                         Số điện thoại
                     </th>
                     <th>
                         Email
                     </th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 
                 <tr>
                     <td>
-                        @Model.Customer.CusName
+                        {{ $customer->CusName }}
                     </td>
                     <td>
-                        @Model.Customer.Address
+                        {{ $customer->Phone }}
                     </td>
                     <td>
-                        @Model.Customer.Phone
-                    </td>
-                    <td>
-                        @Model.Customer.Email
-                    </td>
-                    <td>
-                        <a href="/Admin/OrderDetails/Edit?id=@Model.CusID"><i class="text-warning fa-solid fa-pen-to-square"></i></a>
-                        <a href="/Admin/OrderDetails/Details?id=@Model.CusID"><i class="fa-solid fa-circle-info"></i></a>
-                        <a href="/Admin/OrderDetails/Delete?id=@Model.CusID"><i class="text-danger fa-solid fa-trash"></i></a>
-
+                        {{ $customer->Email }}
                     </td>
                 </tr>
             </tbody>
-        </table> --}}
+        </table>
 
         <h3>Chi tiết đơn hàng</h3>
         <table class="table table-bordered table-striped" id="dataTable">
@@ -194,36 +180,102 @@
     <div class="card">
         <h3>TRẠNG THÁI ĐƠN HÀNG</h3>
         <div class="navbar" style="height: 60px;">
-            <div><i class="fa-solid fa-check"></i> Xác nhận đơn hàng</div>
-            <div>
-                <button ng-click="UpdateStatusOrder('Đã xác nhận')" class="btn btn-info">Xác nhận</button>
-            </div>
+            @if($order->Status == 'Chờ xác nhận')
+                <div><i class="fa-solid fa-check"></i> Xác nhận đơn hàng</div>
+                <form action="{{ route('updatedh', $order->id) }}" method="post">
+                    @csrf
+                    <input type="hidden" name="Status" value="Đã xác nhận">
+                    {{-- <input type="hidden" name="id" value="{{ $order->id }}"> --}}
+                    <div>
+                        <button ng-click="UpdateStatusOrder('Đã xác nhận')" class="btn btn-info">Xác nhận</button>
+                    </div>
+                </form>
+            @else
+                @if($order->Status == 'Đã xác nhận' || $order->Status == 'Đang giao' || $order->Status == 'Giao hàng thành công')
+                    <div><i class="text-success fa-solid fa-check"></i> Xác nhận đơn hàng</div>
+                @endif
+            @endif
         </div>
         <!-- <hr> -->
         <div class="navbar" style="height: 60px;">
-            <div>
-                <i class="fa-solid fa-check"></i>
-                Xác nhận thanh toán
-            </div>
-            <div>
-                <button class="btn btn-info">Xác nhận thanh toán</button>
-            </div>
-        </div>
-        <!-- <hr> -->
-        <form action="">
-            <div class="navbar" style="height: 60px;">
+            @if ($order->Paid == 0)    
                 <div>
                     <i class="fa-solid fa-check"></i>
-                    Giao hàng
+                    Xác nhận thanh toán
                 </div>
+                <form action="{{ route('updatedh', $order->id) }}" method="post">
+                    @csrf
+                    <input type="hidden" name="Paid" value="1">
+                    {{-- <input type="hidden" name="id" value="{{ $order->id }}"> --}}
+                    <div>
+                        <button class="btn btn-info">Xác nhận thanh toán</button>
+                    </div>
+                </form>
+                
+            @else
+                @if ($order->Status == 'Giao hàng thành công')
+                    <div>
+                        <i class="text-success fa-solid fa-check"></i>
+                        Đã thanh toán
+                    </div>
+                @else
+                    <div>
+                        <i class="text-success fa-solid fa-check"></i>
+                        Đã thanh toán
+                    </div>
+                    <form action="{{ route('updatedh', $order->id) }}" method="post">
+                        @csrf
+                        <input type="hidden" name="Paid" value="0">
+                        <div>
+                            <button class="btn btn-secondary">Hoàn tiền</button>
+                        </div>
+                    </form>
+                @endif
+
+            @endif
+        </div>
+        <!-- <hr> -->
+        <div class="navbar" style="height: 60px;">
+            @if ($order->Status == 'Giao hàng thành công')
                 <div>
-                    <button class="btn btn-info">Đã giao cho Shipper</button>
+                    <i class="text-success fa-solid fa-check"></i>
+                    Đã giao
                 </div>
-            </div>
+            @else
+                @if ($order->Status == 'Đang giao')
+                    <div>
+                        <i class="text-success fa-solid fa-check"></i>
+                        Đang giao
+                    </div>
+                @else
+                    <div>
+                        <i class="fa-solid fa-check"></i>
+                        Giao hàng
+                    </div>
+                    <form action="{{ route('updatedh', $order->id) }}" method="post">
+                        @csrf
+                        <input type="hidden" name="Status" value="Đang giao">
+                        <div>
+                            <button class="btn btn-info">Đã giao cho shipper</button>
+                        </div>
+                    </form>
+                @endif
+            @endif
+            
+        </div>
+        @if ($order->Status != 'Giao hàng thành công')
+            <form action="{{ route('updatedh', $order->id) }}" method="post">
+                @csrf
+                <input type="hidden" name="Status" value="Giao hàng thành công">
+                <div class="navbar">
+                    <button class="btn btn-success">Giao hàng thành công</button>
+                </div>
+            </form>
+        @else
             <div class="navbar">
-                <button class="btn btn-success">Giao hàng thành công</button>
+                <div class="text-success">Giao hàng thành công</div>
             </div>
-        </form>
+        @endif
     </div>
     <div style="margin-top: 20px">
         <a class="btn btn-primary" href="{{ URL::to('/admin/order/createPdf',$item->id) }}">Export to PDF</a>

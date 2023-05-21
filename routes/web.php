@@ -51,6 +51,10 @@ Route::get('/cai-dat', [HomeController::class, 'KhachHang'])->name('khachhang');
 
 Route::get('/quan-ly-don-hang', [HomeController::class, 'QuanLyDonHang'])->name('quanlydonhang');
 
+Route::get('/lay-chi-tiet-don-hang/id={id}', [HomeController::class, 'LayCTDHTheoHD'])->name('LayCTDHTheoHD');
+
+Route::post('/cap-nhat-don-hang', [HomeController::class, 'CapNhatTrangThaiDH'])->name('CapNhatTrangThaiDH');
+
 Route::post('/cap-nhat-thong-tin', [HomeController::class, 'UpdateKhachHang'])->name('updatekhachhang');
 
 Route::post('/cap-nhat-mat-khau', [HomeController::class, 'CapNhatMatKhau'])->name('capnhatmatkhau');
@@ -80,6 +84,7 @@ Route::prefix('/admin')->middleware(['auth'])->group(function(){
         Route::get('/edit/{id}', [AdminProductController::class, 'edit'])->name('editsp');
         Route::put('/update/{id}', [AdminProductController::class, 'update'])->name('updatesp');
         Route::delete('/destroy/{id}', [AdminProductController::class, 'destroy'])->name('deletesp');
+        Route::delete('/destroySpecification/{id}', [AdminProductController::class, 'destroySpecification'])->name('deletettsp');
     });
 
     // ImageProduct
@@ -96,12 +101,8 @@ Route::prefix('/admin')->middleware(['auth'])->group(function(){
     // Order
     Route::prefix('/order')->group(function(){
         Route::get('/index', [AdminOrderController::class, 'index'])->name('indexdh');
-        Route::get('/create', [AdminOrderController::class, 'create'])->name('createdh');
-        Route::post('/store', [AdminOrderController::class, 'store'])->name('storedh');
         Route::get('/show/{id}', [AdminOrderController::class, 'show'])->name('showdh');
-        Route::get('/edit/{id}', [AdminOrderController::class, 'edit'])->name('editdh');
-        Route::put('/update/{id}', [AdminOrderController::class, 'update'])->name('updatedh');
-        Route::delete('/destroy/{id}', [AdminOrderController::class, 'destroy'])->name('deletedh');
+        Route::post('/update/{id}', [AdminOrderController::class, 'updateStatus'])->name('updatedh');
         Route::get('/createPdf', [AdminOrderController::class, 'createPDF']);
     });
     

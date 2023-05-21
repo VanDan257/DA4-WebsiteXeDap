@@ -184,26 +184,6 @@ class AdminProductController extends Controller
             'Price' => $request->input('Price'),
             'PromotionPrice' => $request->input('PromotionPrice')]);
 
-        // $thongSo = $request->input('SpeDescription');
-        // $speNames = $request->input('SpeName');
-        // $specifications = [];
-
-        // foreach ($speNames as $key => $val) {
-        //     // var_dump($key, $val);
-        //     $specifications[] = [
-        //         'SpeName' => $val,
-        //         'Description' => $thongSo[$key]
-        //     ];
-        //     $tskt = specificationproductModel::where('SpeName', '=', $val)->get();
-        //     // echo($tskt);
-        //     DB::table('specifications')
-        //     // ->where('SpeName', '=', $val)
-        //     ->where('id', '=', $tskt->id)
-        //     ->update(['Description', '=', $thongSo[$key]]);
-        // }
-
-
-
         return redirect()->route('indexsp')->with('thongbao', 'Cập nhật sản phẩm thành công');
     }
 
@@ -213,15 +193,16 @@ class AdminProductController extends Controller
     public function destroy(string $id)
     {
         //
-        $image = imageproductModel::where('ProID', $id)->first();
-        dd($image);
-        // $image->delete();
+        $image = DB::table('imageproduct')->where('ProID', $id)->delete();
 
-        // $specifications = priceproductModel::where('ProID', $id)->first();
-        // $specifications->delete();
+        $specifications = DB::table('specifications')->where('ProID', $id)->delete();
 
-        // $product = productsModel::find($id);
-        // $product->delete();
-        // return redirect()->route('indexsp')->with('thongbao', 'Xoá sản phẩm thành công');
+        $product = productsModel::find($id);
+        $product->delete();
+        return redirect()->route('indexsp')->with('thongbao', 'Xoá sản phẩm thành công');
+    }
+    public function destroySpecification(string $id){
+        $specification = specificationproductModel::find($id);
+        $specification->delete();
     }
 }

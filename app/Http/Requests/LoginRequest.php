@@ -26,6 +26,7 @@ class LoginRequest extends FormRequest
         return [
             //
             'CusName' => 'required|min:6',
+            'Phone'=>  'regex:/^([0-9\s\-\+\(\)]*)$/',
             'Email' => 'required|email',
             'Password' => 'required|min:6',
         ];
@@ -35,6 +36,7 @@ class LoginRequest extends FormRequest
         return [
             'CusName.min' => 'Trường :attribute không được nhỏ hơn :min ký tự',
             'CusName.required' => 'Vui lòng nhập :attribute',
+            'Phone.regex' => 'Trường :attribute không hợp lệ',
             'Password.min' => 'Trường :attribute không được nhỏ hơn :min ký tự',
             'Password.required' => 'Vui lòng nhập :attribute',
             'Email.email' => 'Trường :attribute phải là 1 địa chỉ email',
@@ -45,6 +47,7 @@ class LoginRequest extends FormRequest
     public function attributes(){
         return[
             'CusName' => 'họ và tên',
+            'Phone' => 'số điện thoại',
             'Email' => 'email',
             'Password' => 'mật khẩu'
         ];

@@ -11,19 +11,48 @@
         <table class="table table-borered">
             <thead>
                 <tr class="bg-gray-200 text-black">
-                    <th>Hình ảnh</th>
-                    <th>Tên sản phẩm</th>
-                    <th>Giá tiền</th>
+                    <td></td>
+                    <th>Đơn hàng</th>
                     <th>Trạng thái</th>
+                    <th>Ngày đặt</th>
+                    <th>Tổng tiền</th>
                 </th>
             </thead>
             <tbody>
                 @foreach ($orders as $order)    
                     <tr>
-                        <td><img style="width: 150px;" src="/FileUpLoad/images/{{ $order->Image }}" alt=""></td>
-                        <td>{{ $order->Title }}</td>
-                        <td>{{ $order->Price }}</td>
-                        <td>{{ $order->Status  }}</td>
+                        <td class="text-center">
+                            @if ($order->Status == 'Giao hàng thành công')
+                            <i class="text-success fa-solid fa-check " style="font-size: 1.4rem;"></i>
+                            @else
+                                @if ($order->Status == 'Đang giao')
+                                    <form action="{{ route('CapNhatTrangThaiDH') }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $order->id }}">
+                                        <input type="hidden" name="Status" value="Giao hàng thành công">
+                                        <button style="padding: 2px; min-width: 70px" class="btn btn-info">Đã nhận được hàng</button>
+                                    </form>
+                                @else
+                                    <i class="fa-solid fa-check" style="font-size: 1.4rem;"></i>
+                                @endif
+                            @endif
+                        </td>
+                        <td id="donhang{{ $index++ }}"></td>
+                        <td>
+                            @if ($order->Status == 'Giao hàng thành công')
+                                {{$order->Status}}
+                            @else
+                                {{ $order->Status }}, 
+                                @if ($order->Paid == 0)
+                                    <div>Chưa thanh toán</div> 
+                                @else
+                                    <div>Đã thanh toán</div> 
+                                @endif
+                            @endif    
+                        </td>
+                        <td>{{ $order->created_at  }}</td>
+                        <td>{{ number_format($order->TotalPay, 0, ',', '.')}}VNĐ</td>
+                        
                     </tr>
                 @endforeach
             </tbody>
@@ -32,4 +61,27 @@
 </div>
 </div>
 
+@endsection
+
+@section('js')
+    <script>
+        $(document).ready(function() {
+            @foreach ($orders as $order)
+            $.ajax({
+                url: "{{ route('LayCTDHTheoHD', "$order->id") }}",
+                type: 'GET',
+                dataType: "json",
+                success: function(response) {
+                    // Xử lý kết quả trả về ở đây
+                    var data = response;
+                    var html = '';
+                    for (var i = 0; i < data.length; i++) {
+                        html+= '<div> + ' + data[i].Title + ' - SL - ' + data[i].Quantity + ' - Giá - ' + data[i].Price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) + '</div>'
+                    }
+                        $('#donhang{{ $indexdh++ }}').html(html);
+                }
+            });
+            @endforeach
+        });
+    </script>
 @endsection
