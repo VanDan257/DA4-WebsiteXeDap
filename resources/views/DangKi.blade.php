@@ -53,9 +53,7 @@
                 </div>
 
                 @error('msg')
-                    <h5 style="color: red; margin: 0; padding: 0; text-align: center;">{{ $message }}</h5>
-                    {{-- <div style=" text-align: center;">
-                    </div> --}}
+                    <h5 class="w-100" style="color: red; margin: 0; padding: 0; text-align: center;">{{ $message }}</h5>
                 @enderror
     
                 <ul>

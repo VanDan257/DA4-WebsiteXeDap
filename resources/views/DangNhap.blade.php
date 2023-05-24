@@ -30,22 +30,28 @@
                 @csrf
                 <div>
                     <fieldset>
+                        @error('Email')
+                            <div style="color: red">{{ $message }}</div>
+                        @enderror
                         <div>
                             <label for="email">Email</label>
-                            <input id="email" type="email" name="Emaillg" class="Email" placeholder="marcia@polo.com"/>
+                            <input id="email" type="email" name="Email" class="Email" placeholder="marcia@polo.com"/>
                         </div>
                     </fieldset>
                     <fieldset>
+                        @error('Password')
+                            <div style="color: red">{{ $message }}</div>
+                        @enderror
                         <div>
                             <label for="password">Password</label>
-                            <input id="password" type="password" name="Passwordlg" class="Password" placeholder="••••••••"/>
+                            <input id="password" type="password" name="Password" class="Password" placeholder="••••••••"/>
                         </div>
                     </fieldset>
                 </div>
 
-                @if(Session::has('message'))
-                    <fieldset class="alert alert-danger text-center">{{ Session::get('message') }}</fieldset>
-                @endif
+                @error('msg')
+                    <h5 class="w-100" style="color: red; margin: 0; padding: 0; text-align: center;">Đăng nhập không thành công</h5>
+                @enderror
     
                 <ul>
                     <li>
@@ -76,16 +82,3 @@
         }, 3000);
     </script>
 @endsection
-
-{{-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Đăng nhập - Đăng kí</title>
-</head>
-<body> --}}
- 
-{{-- </body>
-</html> --}}

@@ -75,7 +75,7 @@
                 <div class="row pb-3">
                     <div class="col-12 pb-1">
                         <div class="d-flex align-items-center justify-content-between mb-4">
-                            <form method="POST" action="{{ route('searchdanhmucsanpham') }}">
+                            <form method="POST" action="{{ route('searchdanhmucsanpham') }}" id="searchproduct">
                                 <div class="input-group">
                                     @csrf
                                     <input type="text" name="Title" class="form-control" placeholder="Search by name">
@@ -146,6 +146,24 @@
     </div>
     <!-- Shop End -->
 
-    
-
 @endsection
+
+{{-- @section('js')
+    <script>
+        $(document).ready(function(){
+            $(document).on('submit', '#searchproduct', function(e){
+                e.preventDefault();
+
+                $.ajax({
+                url: $(this).attr('action'),
+                    method: 'POST',
+                    data: $(this).serialize(),
+                    console.log(data);
+                    success: function(response) {
+                        console.log(response);
+                    },
+                })
+            })
+        })
+    </script>
+@endsection --}}

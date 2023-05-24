@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class priceproductModel extends Model
+class discountModel extends Model
 {
     use HasFactory;
-    protected $table = 'pricehistory';
+    protected $table = 'Discount';
     protected $fillable = [
         'ProID',
         'EndDate',

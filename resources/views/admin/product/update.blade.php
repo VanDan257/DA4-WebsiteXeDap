@@ -1,4 +1,65 @@
 @extends('admin.layout.layout')
+@section('css')
+<style>
+  :root {
+    --gray: #3e4146;
+    --blue: #689bf6;
+    --yellow: #ffd84c;
+    --orange: #f66867;
+    --purple: #8e6ac1;
+    --white: #ffffff;
+    --black: #000000;
+  }
+  
+  .pop-up {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    overflow-y: auto; 
+    box-shadow: 0px 6px 30px rgba(0,0,0,0.4);
+    visibility: hidden;
+    opacity: 0;
+    transition: all .3s;
+    z-index: 10;
+    background-color: var(--white);
+    width: 700px;
+  }
+  
+  .content {
+    overflow: hidden;
+    text-align: center;
+    position: relative;
+  }
+  
+  .content .container {
+    padding: 100px 20px 10px;
+  }
+  
+  .close {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 1.1rem;
+    letter-spacing: 0.05rem;
+    color: var(--gray);
+    transition : all .4s;
+  }
+  
+  .close:hover{
+    cursor: pointer;
+    color: var(--orange);
+  }
+  
+  .open {
+    visibility: visible;
+    opacity: 1;
+    transform: translate(-50%, -75%) scale(1);
+    
+  }
+</style>
+
+@endsection
 
 @section('NamePage')
     Xe đạp
@@ -37,7 +98,7 @@
                           <div class="form-group">
                             <label for="entercateid">Danh mục</label>
                             <select class="form-control" name="CateID" id="CateID">
-                              <option value="" name="CateID" selected> -- Chọn danh mục --</option>
+                              <option value="{{ $product->CateID }}" name="CateID" selected>{{ $product->CateName }}</option>
                               @foreach($categories as $category)
                                 <option name="CateID" value="{{ $category->id }}" >{{ $category->CateName  }}</option>
                               @endforeach
@@ -52,14 +113,16 @@
                       </div>
                       <div class="col-md-6">
                         <div class="card-body">
-                          <div class="form-group">
+                          <div class="form-group" style="margin-left: 12px;">
+                            <a href="#" id="addAtribute" class="btn btn-info"><span>Sửa giá sản phẩm</span></a>
+                          </div>
+                          <div class="form-group" style="margin-left: 12px;">
+                            <a href="#" id="discount" class="btn btn-info"><span>Thêm giá khuyến mãi</span></a>
+                          </div>
+                          {{-- <div class="form-group">
                             <label for="entertitle">Giá</label>
                             <input type="text" value="{{ $product->Price }}" id="Price" value="0" class="form-control" name="Price">
-                          </div>
-                          <div class="form-group">
-                            <label for="entertitle">Giá khuyến mại</label>
-                            <input type="text" value="{{ $product->PromotionPrice }}" id="PromotionPrice" value="0" class="form-control" name="PromotionPrice">
-                          </div>
+                          </div> --}}
                         </div>
                       </div>
                       <div class="form-group">
@@ -157,10 +220,98 @@
         </div>
       </section>
       <!-- /.content -->
+
+      <div class="pop-up" id="pop-up_price">
+        <div class="content">
+          <div class="container">
+            <div class="dots">
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+            </div>
+            
+            <span class="close">close</span>
+            
+            <div class="title">
+                <h1>Sửa giá sản phẩm</h1>
+            </div>
+            <div class="subscribe">
+            
+              <form>
+                <div class="form-group">
+                    <label class="control-label col-md-4" for="tentt">Giá</label>
+                    <div class="col-md-12">
+                        <input id="tentt" class="form-control" type="text" />
+                    </div>
+                    <label class="control-label col-md-4" for="giatritt">Ngày kết thúc</label>
+                    <div class="col-md-12">
+                        <input type="date" id="giatritt" class="form-control" >
+
+                    </div>
+                </div>
+                <button class="btn btn-success" ng-click="addSpecification()">Thêm</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pop-up" id="pop-up_discount">
+        <div class="content">
+          <div class="container">
+            <div class="dots">
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+            </div>
+            
+            <span class="close">close</span>
+            
+            <div class="title">
+                <h1>Thêm giá khuyến mãi</h1>
+            </div>
+            <div class="subscribe">
+            
+              <form>
+                <div class="form-group">
+                    <label class="control-label col-md-4" for="tentt">Giá khuyến mãi</label>
+                    <div class="col-md-12">
+                        <input id="tentt" class="form-control" type="text" />
+                    </div>
+                    <label class="control-label col-md-4" for="giatritt">Ngày kết thúc</label>
+                    <div class="col-md-12">
+                        <input type="date" id="giatritt" class="form-control" >
+
+                    </div>
+                </div>
+                <button class="btn btn-success" ng-click="addSpecification()">Thêm</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
 @endsection
 
 @section('js')
   <script>
+
+    
+  $('#addAtribute').click(function(){
+    $('#pop-up_price').addClass('open');
+  });
+
+  $('.pop-up .close').click(function(){
+    $('.pop-up').removeClass('open');
+  }); 
+
+  $('#discount').click(function(){
+    $('#pop-up_discount').addClass('open');
+  });
+
+  $('.pop-up .close').click(function(){
+    $('.pop-up').removeClass('open');
+  });
+
 
     // Lấy tất cả các button trong tài liệu
     var buttons = document.querySelectorAll('.btnXoaThuocTinh');
@@ -240,6 +391,17 @@
       })
     })
   </script>
+
+  {{-- <script src="{{ asset('/ckeditor/ckeditor/ckeditor.js') }}"></script>
+  <script>
+    import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+    ClassicEditor
+        .create(document.querySelector('#editor'))
+        .catch(error => {
+            console.error(error);
+        });
+  </script> --}}
+
   <script src="/Assets/ckeditor/ckeditor.js"></script>
   <script>
       CKEDITOR.replace('Description');

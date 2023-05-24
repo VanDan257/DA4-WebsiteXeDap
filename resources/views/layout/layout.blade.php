@@ -36,11 +36,11 @@
 	
     @include('layout\footer')
 
-    @if(Session::has('message'))
+    {{-- @if(Session::has('message'))
       <div class="toast-message">
         <p class="text-light p-3">{{ $message }}</p>
       </div>
-    @endif
+    @endif --}}
     
 
     <!-- Back to Top -->

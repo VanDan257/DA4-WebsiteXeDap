@@ -42,6 +42,7 @@
                   <th>Hình ảnh</th>
                   <th>Tiêu đề</th>
                   <th>Danh mục</th>
+                  <th>Giá</th>
                   <th></th>
                 </tr>
                 </thead>
@@ -50,8 +51,11 @@
                   
                   <tr>
                     <td><a href="{{ route('indeximg', $product->id) }}"><img style="width:150px" src="/FileUpLoad/images/{{ $product->Image }}" alt=""></a></td>
-                    <td>{{ $product->Title }}</td>
+                    <td style="white-space: pre-wrap;">{{ $product->Title }}</td>
                     <td>{{ $product->category->CateName ?? '' }}</td>
+                    <td>
+                      {{ number_format($product->Price)}}VNĐ
+                    </td>
                     <td>
                       {{-- <a href="{{ route('editsp',$product->id) }}"><i class="text-warning fa-solid fa-edit"></i></a>
                       <a href="#" onclick="removeProduct($product->id, '/admin/product/destroy')"><i class="text-danger fa-solid fa-trash"></i></a> --}}

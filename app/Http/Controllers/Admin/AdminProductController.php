@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\ProductRequest;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Http\UploadedFile;
 
 class AdminProductController extends Controller
 {
@@ -37,20 +38,8 @@ class AdminProductController extends Controller
     {
         //
         $categories = categoryModel::all();
-        
-        return view('admin.product.create', ['categories' => $categories]);
-    }
 
-    protected function isValidPrice($request){
-        if($request->input('Price') != 0 && $request->input('PromotionPrice')>=$request->input('Price')){
-            Session()->flash('error', 'Giá giảm không được lớn hơn giá gốc');
-            return false;
-        }
-        if($request->input('PromotionPrice') != 0 && $request->input('Price') == 0){
-            Session()->flash('error', 'Vui lòng nhập giá gốc');
-            return false;
-        }
-        return true;
+        return view('admin.product.create', ['categories' => $categories]);
     }
 
     /**
@@ -63,18 +52,27 @@ class AdminProductController extends Controller
 
         // $file = $request->file('Image');
         // dd($file);
+
+        $Image = "";
+
+        if ($request->hasFile('Image')) {
+            $file = $request->file('Image');
+            $path = $file->store('FileUpLoad/images'); // Lưu trữ tệp tin trong thư mục 'uploads'
+            $Image = $file->getClientOriginalName();
+        } else {
+            $Image = $request->input('Image');
+        }
+
         $sp = new productsModel();
         $sp->Title = $request->input('Title');
         $sp->CateID = $request->input('CateID');
         $sp->Description = $request->input('Description');
-        $sp->Image = $request->input('Image');
+        $sp->Image = $Image;
         $sp->Price = $request->input('Price');
         $sp->PromotionPrice = $request->input('PromotionPrice');
         // dd($sp);
         $sp->save();
 
-        // // Lưu file vào đường dẫn mong muốn
-        // // $file->move('FileUpLoad/images', $file->getClientOriginalName());
 
         // Lấy ra sản phẩm mới nhất
         $newestProduct = productsModel::latest()->first();
@@ -89,20 +87,29 @@ class AdminProductController extends Controller
         // dd($image);
         $image->save();
 
+        // Thêm giá vào bảng priceproduct
+        $priceproduct = new priceproductModel();
+        $priceproduct->ProID = $newestProduct->id;
+        $priceproduct->Price = $request->input('Price');
+        $priceproduct->EndDate = '2023-07-07';
+        $priceproduct->save();
+
         // Thêm danh sách thuộc tính sản phẩm
         $thongSo = $request->input('SpeDescription');
         $speNames = $request->input('SpeName');
         $specifications = [];
 
-        foreach ($thongSo as $key => $val) {
-            $specifications[] = [
-                'ProID' => $newestProduct->id,
-                'SpeName' => $speNames[$key],
-                'Description' => $val
-            ];
-        }
+        if ($thongSo != null) {
+            foreach ($thongSo as $key => $val) {
+                $specifications[] = [
+                    'ProID' => $newestProduct->id,
+                    'SpeName' => $speNames[$key],
+                    'Description' => $val
+                ];
+            }
 
-        specificationproductModel::insert($specifications);
+            specificationproductModel::insert($specifications);
+        }
 
 
         return redirect()->route('indexsp')->with('thongbao', 'Thêm sản phẩm thành công!');
@@ -126,7 +133,7 @@ class AdminProductController extends Controller
             ->select('imageproduct.*')
             ->where('imageproduct.ProID', $id)
             ->get();
-            // dd($specifications);
+        // dd($specifications);
         return view('admin.product.detail', compact('product', 'specifications', 'imageproducts'));
     }
 
@@ -135,8 +142,13 @@ class AdminProductController extends Controller
      */
     public function edit(string $id)
     {
-        
-        $product = productsModel::where('id', $id)->first();
+
+        $product = DB::table('product')
+            ->join('category', 'product.cateid', '=', 'category.id')
+            ->select('product.*', 'category.*')
+            ->where('product.id', $id)
+            ->first();
+        // dd($product);
         $specifications = DB::table('product')
             ->join('specifications', 'product.id', '=', 'specifications.ProID')
             ->select('specifications.*')
@@ -157,7 +169,7 @@ class AdminProductController extends Controller
     {
         // Xoá tất cả thông số kỹ thuật của sản phẩm
         $spe = specificationproductModel::where('ProID', $id)->first();
-        if($spe != null) {
+        if ($spe != null) {
             $spe->delete();
         }
 
@@ -182,7 +194,8 @@ class AdminProductController extends Controller
             'CateID' => $request->input('CateID'),
             'Description' => $request->input('Description'),
             'Price' => $request->input('Price'),
-            'PromotionPrice' => $request->input('PromotionPrice')]);
+            'PromotionPrice' => $request->input('PromotionPrice')
+        ]);
 
         return redirect()->route('indexsp')->with('thongbao', 'Cập nhật sản phẩm thành công');
     }
@@ -201,8 +214,18 @@ class AdminProductController extends Controller
         $product->delete();
         return redirect()->route('indexsp')->with('thongbao', 'Xoá sản phẩm thành công');
     }
-    public function destroySpecification(string $id){
+    public function destroySpecification(string $id)
+    {
         $specification = specificationproductModel::find($id);
         $specification->delete();
+    }
+
+    public function editPrice(string $id, Request $request)
+    {
+        $price = new priceproductModel();
+        $price->ProID = $id;
+        $price->Price = $request->input('Price');
+        $price->save();
+        return session()->put('message', 'Sửa giá sản phẩm thành công');
     }
 }
