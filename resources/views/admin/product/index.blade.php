@@ -39,6 +39,7 @@
               <table id="example2" class="table table-bordered table-hover" id="dataTable">
                 <thead>
                 <tr>
+                  <th>STT</th>
                   <th>Hình ảnh</th>
                   <th>Tiêu đề</th>
                   <th>Danh mục</th>
@@ -50,6 +51,7 @@
                 @foreach ($products as $product)
                   
                   <tr>
+                    <td>{{ $index++ }}</td>
                     <td><a href="{{ route('indeximg', $product->id) }}"><img style="width:150px" src="/FileUpLoad/images/{{ $product->Image }}" alt=""></a></td>
                     <td style="white-space: pre-wrap;">{{ $product->Title }}</td>
                     <td>{{ $product->category->CateName ?? '' }}</td>

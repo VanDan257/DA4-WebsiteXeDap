@@ -124,19 +124,19 @@ class HomeController extends Controller
         orderModel::find($request->input('id'))->update([
             'Status' => $request->input('Status')
         ]);
-        if ($request->input('Status') == 'Đã huỷ') {
-            $products = DB::table('orderproduct')
-                ->join('orderproductdetail', 'orderproductdetail.OrdID', 'orderproduct.id')
-                ->join('product', 'orderproductdetail.ProID', 'product.id')
-                ->select('product.*', 'orderproductdetail.*')
-                ->where('orderproduct.id', '=', orderModel::find($request->input('id'))->first()->id);
-            dd($products->get());
-            foreach ($products as $product) {
-                productsModel::find($product->id)->update([
-                    'Amount' => $product->Amount + $product->Quantity
-                ]);
-            }
-        }
+        // if ($request->input('Status') == 'Đã huỷ') {
+        //     $products = DB::table('orderproduct')
+        //         ->join('orderproductdetail', 'orderproductdetail.OrdID', 'orderproduct.id')
+        //         ->join('product', 'orderproductdetail.ProID', 'product.id')
+        //         ->select('product.*', 'orderproductdetail.*')
+        //         ->where('orderproduct.id', '=', orderModel::find($request->input('id'))->first()->id);
+        //     dd($products->get());
+        //     foreach ($products as $product) {
+        //         productsModel::find($product->id)->update([
+        //             'Amount' => $product->Amount + $product->Quantity
+        //         ]);
+        //     }
+        // }
         return redirect()->back();
     }
 

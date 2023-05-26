@@ -30,7 +30,8 @@ class AdminProductController extends Controller
             ->get();
         $products = productsModel::all();
         $categories = categoryModel::all();
-        return view('admin.product.index', ['products' => $products, 'categories' => $categories]);
+        $index = 1;
+        return view('admin.product.index', ['products' => $products, 'categories' => $categories, 'index' => $index]);
     }
 
     /**

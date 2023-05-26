@@ -27,7 +27,8 @@ class ProductRequest extends FormRequest
         return [
             //
             'Title' => 'required|min:6',
-            'Price' => 'required|integer'
+            'Price' => 'required|integer',
+            'Amount' => 'required|integer'
         ];
     }
     public function messages()
@@ -36,6 +37,8 @@ class ProductRequest extends FormRequest
             'Title.required' => 'Vui lòng nhập :attribute',
             'Title.min' => ':attribute không được nhỏ hơn :min ký tự',
             'Price.required' => 'Vui lòng nhập :attribute',
+            'Amount.required' => 'Vui lòng nhập :attribute',
+            'Amount.integer' => ':attribute sản phẩm phải là số',
             'Price.integer' => ':attribute sản phẩm phải là số'
         ];
     }
@@ -44,7 +47,8 @@ class ProductRequest extends FormRequest
     {
         return [
             'Title' => 'tiêu đề sản phẩm',
-            'Price' => 'giá sản phẩm'
+            'Price' => 'giá sản phẩm',
+            'Amount' => 'số lượng sản phẩm'
         ];
     }
     public function withValidator($validator)
