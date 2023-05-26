@@ -13,7 +13,8 @@ class productsModel extends Model
     {
         return $this->belongsTo('App\Models\categoryModel', 'CateID', 'id');
     }
-    public function image(){
+    public function image()
+    {
         return $this->hasMany('App\Models\imageproductModel');
     }
     protected $fillable = [
@@ -23,6 +24,7 @@ class productsModel extends Model
         'Price',
         'PromotionPrice',
         'Title',
+        'Amount',
         'id'
     ];
 

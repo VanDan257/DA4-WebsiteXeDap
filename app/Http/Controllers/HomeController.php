@@ -105,6 +105,7 @@ class HomeController extends Controller
         $orders = DB::table('orderproduct')
             ->where('orderproduct.CusID', '=', $customer_id)
             ->get();
+        // dd($orders);
         return view('QuanLyDonHang', ['orders' => $orders, 'index' => $index = 0, 'indexdh' => $indexdh = 0]);
     }
 
@@ -123,6 +124,19 @@ class HomeController extends Controller
         orderModel::find($request->input('id'))->update([
             'Status' => $request->input('Status')
         ]);
+        if ($request->input('Status') == 'Đã huỷ') {
+            $products = DB::table('orderproduct')
+                ->join('orderproductdetail', 'orderproductdetail.OrdID', 'orderproduct.id')
+                ->join('product', 'orderproductdetail.ProID', 'product.id')
+                ->select('product.*', 'orderproductdetail.*')
+                ->where('orderproduct.id', '=', orderModel::find($request->input('id'))->first()->id);
+            dd($products->get());
+            foreach ($products as $product) {
+                productsModel::find($product->id)->update([
+                    'Amount' => $product->Amount + $product->Quantity
+                ]);
+            }
+        }
         return redirect()->back();
     }
 
@@ -149,12 +163,26 @@ class HomeController extends Controller
         $request->validate([
             'Recipient' => 'required',
             'Phone' => 'required',
-            'DeliveryAddress' => 'required',
-            'Email' => 'email:rfc,dns'
+            'DeliveryAddress' => 'required'
         ]);
         try {
+
+            $carts = Cart::getContent();
+            $hasProduct = true;
+            foreach ($carts as $cart) {
+                $product = productsModel::find($cart->id);
+                if ($product->Amount > $cart->quantity) {
+                    productsModel::find($cart->id)->update([
+                        'Amount' => $product->Amount - $cart->quantity
+                    ]);
+                } else {
+                    $hasProduct = false;
+                    break;
+                }
+            }
+
             // dd($request->all());
-            // $customer_id = null;
+            $customer_id = null;
             if (Session::has('id')) {
                 $customer_id = Session::get('id');
             } else {
@@ -164,6 +192,7 @@ class HomeController extends Controller
                 $customer->Email = $request->input('Email');
                 $customer->Address = $request->input('DeliveryAddress');
                 $customer->save();
+                $customer_id = customerModel::latest()->first()->id;
             }
 
             $order = new orderModel();
@@ -178,8 +207,9 @@ class HomeController extends Controller
             $order->Note = $request->input('Note');
             $order->save();
 
+
+
             //  orderModel::create($request -> all());
-            $carts = Cart::getContent();
             $newestOrder = orderModel::latest()->first();
             // dd($newestOrder);
             foreach ($carts as $cart) {
@@ -198,7 +228,8 @@ class HomeController extends Controller
             }
             Cart::clear();
         } catch (\Exception $ex) {
-            $this->ThanhToan();
+            session()->put('error', 'Có lỗi xảy ra! Vui lòng thanh toán lại!');
+            return redirect()->back();
         }
 
 
@@ -228,13 +259,13 @@ class HomeController extends Controller
         return view('DangNhap');
     }
 
-    public function LoginStore(LoginRequest $request)
+    public function LoginStore(Request $request)
     {
         $taikhoan = $request->input('Email');
         $matkhau = $request->input('Password');
 
         // $customer = new customerModel();
-        $customer = customerModel::where('email', $taikhoan);
+        $customer = customerModel::where('Email', $taikhoan);
         // dd($customer->first());
         if ($customer->first() == null) {
             session()->put('message', 'Tài khoản không tồn tại');
@@ -278,8 +309,13 @@ class HomeController extends Controller
 
         $data->save();
 
+        $customer = customerModel::latest()->first();
+
+        // session()->put('id', $customer->id);
+        // session()->put('CusName', $customer->CusName);
+
         // Session::put('id', $customer_id);
         // Session::put('CusName', $customer_id->CusName);
-        return redirect('/');
+        return redirect('/dang-nhap');
     }
 }

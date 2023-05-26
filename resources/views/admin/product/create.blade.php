@@ -65,6 +65,7 @@
                             <label for="inputfile">Image</label>
                             <input type="file" id="inputfile" name="Image" id="Image" class="form-control">
                           </div>
+                          
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -79,6 +80,14 @@
                           <div class="form-group">
                             <label for="entertitle">Giá khuyến mại</label>
                             <input type="text" id="Price" value="0" class="form-control" name="PromotionPrice">
+                          </div>
+                          <div class="form-group">
+                            <label for="enteramount">Số lượng</label>
+                            @error('Amount') <i class="fa-fas-error"></i> @enderror
+                            <input type="text" id="Amount" class="form-control" name="Amount">
+                            @error('Amount')
+                              <div class="text-danger">{{ $message }}</div>
+                            @enderror
                           </div>
                         </div>
                       </div>

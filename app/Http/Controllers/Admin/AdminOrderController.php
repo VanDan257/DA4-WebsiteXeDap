@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\customerModel;
 use App\Models\orderModel;
+use App\Models\productsModel;
+use Gloudemans\Tests\Shoppingcart\Fixtures\ProductModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PDF;
@@ -25,17 +27,18 @@ class AdminOrderController extends Controller
     }
 
     // Generate PDF
-    public function createPDF() { 
+    public function createPDF()
+    {
         // retreive all records from db
         $orders = orderModel::all();
         $ordersArr = $orders->toArray();
         // share data to view
-        view()->share('orderproduct',$ordersArr);
+        view()->share('orderproduct', $ordersArr);
         $pdf = PDF::loadView('/admin/order/detail/', $ordersArr);
         print_r($pdf);
         // download PDF file with download method
         // return $pdf->download('pdf_file.pdf');
-      }
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -92,12 +95,11 @@ class AdminOrderController extends Controller
         $status = $request->input('Status');
         $paid = $request->input('Paid');
 
-        if(isset($status)){
+        if (isset($status)) {
             orderModel::find($id)->update([
                 'Status' => $status
             ]);
-        }
-        else if(isset($paid)){
+        } else if (isset($paid)) {
             orderModel::find($id)->update([
                 'Paid' => $paid
             ]);

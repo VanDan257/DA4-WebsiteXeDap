@@ -30,7 +30,8 @@ class ProductRequest extends FormRequest
             'Price' => 'required|integer'
         ];
     }
-    public function messages(){
+    public function messages()
+    {
         return [
             'Title.required' => 'Vui lòng nhập :attribute',
             'Title.min' => ':attribute không được nhỏ hơn :min ký tự',
@@ -39,15 +40,17 @@ class ProductRequest extends FormRequest
         ];
     }
 
-    public function attributes(){
-        return[
+    public function attributes()
+    {
+        return [
             'Title' => 'tiêu đề sản phẩm',
             'Price' => 'giá sản phẩm'
         ];
     }
-    public function withValidator($validator){
-        $validator->after(function ($validator){
-            if ($validator->errors()->count()>0){
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            if ($validator->errors()->count() > 0) {
                 $validator->errors()->add('msg', 'Đã có lỗi xảy ra! Vui lòng kiểm tra lại!');
             }
         });
@@ -59,7 +62,8 @@ class ProductRequest extends FormRequest
     //     ]);
     // }
 
-    protected function failedAuthorization(){
+    protected function failedAuthorization()
+    {
         throw new AuthorizationException('Quay lại trang chủ');
     }
 

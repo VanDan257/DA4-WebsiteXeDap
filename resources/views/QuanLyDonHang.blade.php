@@ -8,6 +8,9 @@
 <div class="container" style="margin: 20px auto;">
     @include('layout.navbarkhachhang')
     <div class="col-sm-9">
+        {{-- @if ($orders == null)
+            Bạn chưa có đơn hàng nào
+        @else   --}}
         <table class="table table-borered">
             <thead>
                 <tr class="bg-gray-200 text-black">
@@ -19,6 +22,7 @@
                 </th>
             </thead>
             <tbody>
+                
                 @foreach ($orders as $order)    
                     <tr>
                         <td class="text-center">
@@ -32,14 +36,22 @@
                                         <input type="hidden" name="Status" value="Giao hàng thành công">
                                         <button style="padding: 2px; min-width: 70px" class="btn btn-info">Đã nhận được hàng</button>
                                     </form>
+                                @elseif ($order->Status == 'Đã huỷ')
+                                <i class="fa-solid fa-cancel" style="font-size: 1.4rem; color: red"></i>
                                 @else
                                     <i class="fa-solid fa-check" style="font-size: 1.4rem;"></i>
+                                    <form action="{{ route('CapNhatTrangThaiDH') }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $order->id }}">
+                                        <input type="hidden" name="Status" value="Đã huỷ">
+                                        <button style="padding: 2px; min-width: 70px" class="btn btn-info btn-danger">Huỷ</button>
+                                    </form>
                                 @endif
                             @endif
                         </td>
                         <td id="donhang{{ $index++ }}"></td>
                         <td>
-                            @if ($order->Status == 'Giao hàng thành công')
+                            @if ($order->Status == 'Giao hàng thành công' || $order->Status == 'Đã huỷ')
                                 {{$order->Status}}
                             @else
                                 {{ $order->Status }}, 
@@ -57,6 +69,7 @@
                 @endforeach
             </tbody>
         </table>
+        {{-- @endif --}}
     </div>
 </div>
 </div>

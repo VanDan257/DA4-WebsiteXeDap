@@ -109,20 +109,32 @@
                             <label for="entertitle">Tiêu đề</label>
                             <input type="text" value="{{ $product->Title }}" id="Title" class="form-control" name="Title">
                           </div>
+                          <div class="form-group">
+                            <label for="enteramount">Số lượng</label>
+                            @error('Amount') <i class="fa-fas-error"></i> @enderror
+                            <input type="text" value="{{ $product->Amount }}" id="Amount" class="form-control" name="Amount">
+                            @error('Amount')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                          </div>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="card-body">
-                          <div class="form-group" style="margin-left: 12px;">
+                          {{-- <div class="form-group" style="margin-left: 12px;">
                             <a href="#" id="addAtribute" class="btn btn-info"><span>Sửa giá sản phẩm</span></a>
                           </div>
                           <div class="form-group" style="margin-left: 12px;">
                             <a href="#" id="discount" class="btn btn-info"><span>Thêm giá khuyến mãi</span></a>
-                          </div>
-                          {{-- <div class="form-group">
+                          </div> --}}
+                          <div class="form-group">
                             <label for="entertitle">Giá</label>
                             <input type="text" value="{{ $product->Price }}" id="Price" value="0" class="form-control" name="Price">
-                          </div> --}}
+                          </div>
+                          <div class="form-group">
+                            <label for="entertitle">Giá khuyến mãi</label>
+                            <input type="text" value="{{ $product->PromotionPrice }}" id="Price" value="0" class="form-control" name="PromotionPrice">
+                          </div>
                         </div>
                       </div>
                       <div class="form-group">
@@ -221,7 +233,7 @@
       </section>
       <!-- /.content -->
 
-      <div class="pop-up" id="pop-up_price">
+      {{-- <div class="pop-up" id="pop-up_price">
         <div class="content">
           <div class="container">
             <div class="dots">
@@ -237,19 +249,20 @@
             </div>
             <div class="subscribe">
             
-              <form>
+              <form method="POST" action="{{ route('editprice', $product->id) }}">
+                @csrf
                 <div class="form-group">
                     <label class="control-label col-md-4" for="tentt">Giá</label>
                     <div class="col-md-12">
-                        <input id="tentt" class="form-control" type="text" />
+                        <input id="tentt" name="Price" class="form-control" type="text" />
                     </div>
                     <label class="control-label col-md-4" for="giatritt">Ngày kết thúc</label>
                     <div class="col-md-12">
-                        <input type="date" id="giatritt" class="form-control" >
+                        <input type="date" name="DatePrice" id="giatritt" class="form-control" >
 
                     </div>
                 </div>
-                <button class="btn btn-success" ng-click="addSpecification()">Thêm</button>
+                <button class="btn btn-success" ng-click="addSpecification()">Sửa</button>
               </form>
             </div>
           </div>
@@ -272,24 +285,25 @@
             </div>
             <div class="subscribe">
             
-              <form>
+              <form method="POST" action="{{ route('editdiscount', $product->id) }}">
+                @csrf
                 <div class="form-group">
                     <label class="control-label col-md-4" for="tentt">Giá khuyến mãi</label>
                     <div class="col-md-12">
-                        <input id="tentt" class="form-control" type="text" />
+                        <input id="tentt" name="PriceDiscount" class="form-control" type="text" />
                     </div>
                     <label class="control-label col-md-4" for="giatritt">Ngày kết thúc</label>
                     <div class="col-md-12">
-                        <input type="date" id="giatritt" class="form-control" >
+                        <input type="date" name="DateDiscount" id="giatritt" class="form-control" >
 
                     </div>
                 </div>
-                <button class="btn btn-success" ng-click="addSpecification()">Thêm</button>
+                <button class="btn btn-success">Thêm</button>
               </form>
             </div>
           </div>
         </div>
-      </div>
+      </div> --}}
 @endsection
 
 @section('js')

@@ -95,13 +95,13 @@
                 </div>
 
                 <div class="d-flex align-items-center mb-4 pt-2">
-                    <div class="input-group quantity mr-3" style="width: 130px;">
+                    <div class="input-group quantity mr-3" style="width: 166px;">
                         <div class="input-group-btn">
                             <button class="btn btn-primary btn-minus" >
                                 <i class="fa fa-minus"></i>
                             </button>
                         </div>
-                        <input type="text" name="quantity" class="form-control bg-gray-200 text-center" value="1">
+                        <input type="text" name="quantity" max="{{ $product->Amount }}" class="form-control bg-gray-200 text-center" value="1">
                         <div class="input-group-btn">
                             <button class="btn btn-primary btn-plus">
                                 <i class="fa fa-plus"></i>
@@ -118,6 +118,7 @@
                         <button class="btn btn-primary btn-add-cart text-light px-3"><i class="fa fa-shopping-cart mr-1"></i> Thêm giỏ hàng</button>
                     </form>
                 </div>
+                <small>Số lượng hàng còn: {{ $product->Amount }}</small>
                 <div class="d-flex pt-2">
                     <p class="text-dark font-weight-medium mb-0 mr-2">Share on:</p>
                     <div class="d-inline-flex">
@@ -236,7 +237,7 @@
                         
                         <div class="card product-item border-0">
                             <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                                <img class="img-fluid w-100" src="{{ $sp->Image }}" alt="">
+                                <img class="img-fluid w-100" src="/FileUpLoad/images/{{ $sp->Image }}" alt="">
                             </div>
                             <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                                 <h6 class="text-truncate mb-3">{{ $sp->Title }}</h6>

@@ -47,7 +47,7 @@
         </dt>
 
         <dd>
-            {{ $product->Price }}
+            {{ number_format($product->Price, 0, ',', '.') }}VNĐ
         </dd>
 
         <dt>
@@ -55,7 +55,15 @@
         </dt>
 
         <dd>
-            {{ $product->PromotionPrice }}
+            {{ number_format($product->PromotionPrice, 0, ',', '.') }}VNĐ
+        </dd>
+
+        <dt>
+            Số lượng
+        </dt>
+
+        <dd>
+            {{ $product->Amount }} sản phẩm
         </dd>
 
     </dl>

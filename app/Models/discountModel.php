@@ -12,6 +12,6 @@ class discountModel extends Model
     protected $fillable = [
         'ProID',
         'EndDate',
-        'Price'
+        'PriceDiscount'
     ];
 }

@@ -49,6 +49,9 @@
                     </fieldset>
                 </div>
 
+                {{-- @if (Session::has('message'))
+                    <h5 class="w-100" style="color: red; margin: 0; padding: 0; text-align: center;">{{ Session::get('message') }}</h5>
+                @endif --}}
                 @error('msg')
                     <h5 class="w-100" style="color: red; margin: 0; padding: 0; text-align: center;">Đăng nhập không thành công</h5>
                 @enderror

@@ -126,7 +126,7 @@
                                     </div>
                                 {{-- <a href="detail.html" class="nav-item nav-link position-relative text-uppercase  mx-4">Shop Detail</a> --}}
                                 <a href="{{ route('giohang') }}" class="nav-item nav-link position-relative text-uppercase  mx-4">Shopping Cart</a>
-                                <a href="{{ route('thanhtoan') }}" class="nav-item nav-link position-relative text-uppercase  mx-4">Checkout</a>
+                                <a href="{{ route('thanhtoan') }}" class="nav-item nav-link position-relative text-uppercase  mx-4">Contact</a>
                                 <a href="{{ route('tintuc') }}" class="nav-item nav-link position-relative text-uppercase  mx-4">Blog</a>
                             </div>
                         </div>

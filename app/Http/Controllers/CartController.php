@@ -11,8 +11,8 @@ class CartController extends Controller
     public function cartList()
     {
         $cartItems = \Cart::getContent();
-        $sum =0.0;
-        foreach ($cartItems as $item){
+        $sum = 0.0;
+        foreach ($cartItems as $item) {
             $sum += $item->price * $item->quantity;
         }
         // dd($cartItems);
@@ -33,7 +33,7 @@ class CartController extends Controller
         ]);
         session()->flash('success', 'Sản phẩm được thêm vào giỏ hàng thành công !');
 
-        return redirect()->route('home');
+        return redirect()->back();
     }
 
     public function updateCart(Request $request)

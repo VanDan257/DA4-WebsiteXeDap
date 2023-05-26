@@ -3,6 +3,11 @@
 @section('content')
      <!-- Checkout Start -->
      <div class="container-fluid pt-5">
+        {{-- @if (Session::has('error'))
+            <h4 class="text-danger text-center">
+                {{ Session::get('error') }}
+            </h4>
+        @endif --}}
         <form method="POST" action="{{ route('thanhtoanstore') }}" class="row px-xl-5">
             <div class="col-lg-8">
                 <div class="mb-4">

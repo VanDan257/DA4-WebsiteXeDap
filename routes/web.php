@@ -71,12 +71,12 @@ Route::post('/dang-ki-post', [HomeController::class, 'RegisterStore'])->name('da
 
 Route::get('/admin/login', [HomeAdminController::class, 'login'])->name('login');
 Route::post('/admin/loginstore', [HomeAdminController::class, 'loginstore'])->name('loginstore');
-Route::prefix('/admin')->middleware(['auth'])->group(function(){
+Route::prefix('/admin')->middleware(['auth'])->group(function () {
     Route::get('/dashboard', [HomeAdminController::class, 'index'])->name('dashboard');
     Route::get('/logout', [HomeAdminController::class, 'logout'])->name('logout');
 
     // Product
-    Route::prefix('/product')->group(function(){
+    Route::prefix('/product')->group(function () {
         Route::get('/index', [AdminProductController::class, 'index'])->name('indexsp');
         Route::get('/create', [AdminProductController::class, 'create'])->name('createsp');
         Route::post('/store', [AdminProductController::class, 'store'])->name('storesp');
@@ -88,7 +88,7 @@ Route::prefix('/admin')->middleware(['auth'])->group(function(){
     });
 
     // ImageProduct
-    Route::prefix('/imageproduct')->group(function(){
+    Route::prefix('/imageproduct')->group(function () {
         Route::get('/index/{id}', [AdminImageProduct::class, 'index'])->name('indeximg');
         Route::get('/create/{id}', [AdminImageProduct::class, 'create'])->name('createimg');
         Route::post('/store', [AdminImageProduct::class, 'store'])->name('storeimg');
@@ -99,15 +99,15 @@ Route::prefix('/admin')->middleware(['auth'])->group(function(){
     });
 
     // Order
-    Route::prefix('/order')->group(function(){
+    Route::prefix('/order')->group(function () {
         Route::get('/index', [AdminOrderController::class, 'index'])->name('indexdh');
         Route::get('/show/{id}', [AdminOrderController::class, 'show'])->name('showdh');
         Route::post('/update/{id}', [AdminOrderController::class, 'updateStatus'])->name('updatedh');
         Route::get('/createPdf', [AdminOrderController::class, 'createPDF']);
     });
-    
+
     // Category
-    Route::prefix('/category')->group(function(){
+    Route::prefix('/category')->group(function () {
         Route::get('/index', [AdminCategoryController::class, 'index'])->name('indexdm');
         Route::get('/create', [AdminCategoryController::class, 'create'])->name('createdm');
         Route::post('/store', [AdminCategoryController::class, 'store'])->name('storedm');
@@ -118,7 +118,7 @@ Route::prefix('/admin')->middleware(['auth'])->group(function(){
     });
 
     // User
-    Route::prefix('/user')->group(function(){
+    Route::prefix('/user')->group(function () {
         Route::get('/index', [AdminUserController::class, 'index'])->name('indexnv');
         Route::get('/create', [AdminUserController::class, 'create'])->name('createnv');
         Route::post('/store', [AdminUserController::class, 'store'])->name('storenv');

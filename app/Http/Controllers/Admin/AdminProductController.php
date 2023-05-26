@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\categoryModel;
+use App\Models\discountModel;
 use App\Models\imageproductModel;
 use App\Models\priceproductModel;
 use App\Models\productsModel;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests\ProductRequest;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\UploadedFile;
+use Carbon\Carbon;
 
 class AdminProductController extends Controller
 {
@@ -70,6 +72,7 @@ class AdminProductController extends Controller
         $sp->Image = $Image;
         $sp->Price = $request->input('Price');
         $sp->PromotionPrice = $request->input('PromotionPrice');
+        $sp->Amount = $request->input('Amount');
         // dd($sp);
         $sp->save();
 
@@ -88,11 +91,11 @@ class AdminProductController extends Controller
         $image->save();
 
         // Thêm giá vào bảng priceproduct
-        $priceproduct = new priceproductModel();
-        $priceproduct->ProID = $newestProduct->id;
-        $priceproduct->Price = $request->input('Price');
-        $priceproduct->EndDate = '2023-07-07';
-        $priceproduct->save();
+        // $priceproduct = new priceproductModel();
+        // $priceproduct->ProID = $newestProduct->id;
+        // $priceproduct->Price = $request->input('Price');
+        // $priceproduct->EndDate = '2023-07-07';
+        // $priceproduct->save();
 
         // Thêm danh sách thuộc tính sản phẩm
         $thongSo = $request->input('SpeDescription');
@@ -145,7 +148,7 @@ class AdminProductController extends Controller
 
         $product = DB::table('product')
             ->join('category', 'product.cateid', '=', 'category.id')
-            ->select('product.*', 'category.*')
+            ->select('product.*', 'category.CateName')
             ->where('product.id', $id)
             ->first();
         // dd($product);
@@ -206,9 +209,9 @@ class AdminProductController extends Controller
     public function destroy(string $id)
     {
         //
-        $image = DB::table('imageproduct')->where('ProID', $id)->delete();
+        // $image = DB::table('imageproduct')->where('ProID', $id)->delete();
 
-        $specifications = DB::table('specifications')->where('ProID', $id)->delete();
+        // $specifications = DB::table('specifications')->where('ProID', $id)->delete();
 
         $product = productsModel::find($id);
         $product->delete();
@@ -220,12 +223,26 @@ class AdminProductController extends Controller
         $specification->delete();
     }
 
-    public function editPrice(string $id, Request $request)
-    {
-        $price = new priceproductModel();
-        $price->ProID = $id;
-        $price->Price = $request->input('Price');
-        $price->save();
-        return session()->put('message', 'Sửa giá sản phẩm thành công');
-    }
+    // public function editPrice(string $id, Request $request)
+    // {
+    //     priceproductModel::where('ProID', $id)->update([
+    //         'EndDate' => Carbon::now()
+    //     ]);
+    //     $price = new priceproductModel();
+    //     $price->ProID = $id;
+    //     $price->Price = $request->input('Price');
+    //     $price->EndDate = $request->input('DatePrice');
+    //     $price->save();
+    //     return session()->put('message', 'Sửa giá sản phẩm thành công');
+    // }
+
+    // public function editDiscount(string $id, Request $request)
+    // {
+    //     $discount = new discountModel();
+    //     $discount->ProID = $id;
+    //     $discount->PriceDiscount = $request->input('PriceDiscount');
+    //     $discount->EndDate = $request->input('DateDiscount');
+    //     $discount->save();
+    //     return session()->put('message', 'Thêm giá khuyến mãi thành công');
+    // }
 }
